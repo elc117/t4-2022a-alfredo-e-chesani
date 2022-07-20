@@ -1,12 +1,9 @@
-package com.mygdx.game;
-import com.badlogic.gdx.ApplicationAdapter;
+package com.mygdx.game.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.math.Intersector;
+import java.util.ArrayList; 
 
 public class Entity{
     float speed;
@@ -19,18 +16,15 @@ public class Entity{
         this.x = x;
         this.y = y;
     }
-    public Rectangle getHitBox() {
+    public Rectangle getHitBox(){
         return hitBox;
     }
-    void colider(Rectangle floor[]){
-        for(Rectangle rect: floor){
-            if(this.hitBox.overlaps(rect)){
+    void colider(ArrayList<Floor> rects){
+        for(Floor rect: rects){
+            if(this.hitBox.overlaps(rect.getHitBox())){
                 if(!Gdx.input.isKeyPressed(Keys.DPAD_UP))
                     speed = 0;
             }
         }
     }
-
-    
 }
-
