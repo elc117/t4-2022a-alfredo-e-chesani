@@ -9,8 +9,10 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Intersector;
 
 public class Entity{
-    float speed;
+    float fallSpeed = 0;
+    public float mass = 1;
     public Rectangle hitBox;
+
     //protected Boolean isColliding;
     protected float x;
     protected float y;
@@ -22,13 +24,14 @@ public class Entity{
     public Rectangle getHitBox() {
         return hitBox;
     }
-    void colider(Rectangle floor[]){
+
+    Rectangle colider(Rectangle floor[]){
         for(Rectangle rect: floor){
             if(this.hitBox.overlaps(rect)){
-                if(!Gdx.input.isKeyPressed(Keys.DPAD_UP))
-                    speed = 0;
+                return rect;
             }
         }
+        return null;
     }
 
     

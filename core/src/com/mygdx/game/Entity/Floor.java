@@ -13,8 +13,8 @@ public class Floor extends Entity{
         this.hitBox = new Rectangle(this.x, this.y, 2000, 50);
         this.sprite = new Texture("floor.jpg");
     }
-    void colider(Rectangle floor[]){
-
+    Rectangle colider(Rectangle floor[]){
+        return null;
     }
 
     public void update(SpriteBatch batch, Rectangle rects[]){
