@@ -13,7 +13,7 @@ public class FallenKing extends ApplicationAdapter {
 	Character player;
 	@Override
 	public void create () {
-		player = new player();
+		player = new Character();
 		batch = new SpriteBatch();
 	}
 
