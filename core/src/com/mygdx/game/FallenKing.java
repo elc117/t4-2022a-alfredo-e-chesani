@@ -13,6 +13,7 @@ import com.mygdx.game.Entity.*;
 import com.mygdx.game.Stage.*;
 
 public class FallenKing extends ApplicationAdapter{
+	final int n_floor = 4;
 	SpriteBatch batch;
 	Texture img;
 	MainCharacter player;
@@ -31,6 +32,7 @@ public class FallenKing extends ApplicationAdapter{
 	public void render (){
 		ScreenUtils.clear(0, 0, 0, 1);
 		batch.begin();
+		l1.update(batch);
 		for(Floor floor : floors){
 			floor.update(batch, floors);
 		}
