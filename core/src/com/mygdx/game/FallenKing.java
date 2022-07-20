@@ -10,17 +10,20 @@ public class FallenKing extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
 	
+	Character player;
 	@Override
 	public void create () {
+		player = new player();
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
 	}
 
+	
 	@Override
 	public void render () {
 		ScreenUtils.clear(1, 0, 0, 1);
 		batch.begin();
 		batch.draw(img, 100, 100, 50, 50);
+		player.update(batch);
 		batch.end();
 	}
 	
