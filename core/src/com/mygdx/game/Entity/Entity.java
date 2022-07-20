@@ -3,11 +3,15 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.math.Intersector;
 
 public class Entity{
-    protected Boolean isColliding;
+    float speed;
+    public Rectangle hitBox;
+    //protected Boolean isColliding;
     protected float x;
     protected float y;
     Texture sprite;
@@ -15,16 +19,18 @@ public class Entity{
         this.x = x;
         this.y = y;
     }
-    public void update(SpriteBatch batch ){
-        batch.draw(sprite, this.x, this.y, 50, 50);
-        if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) 
-      		this.x -= 200 * Gdx.graphics.getDeltaTime();
-   		if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) 
-      		this.x += 200 * Gdx.graphics.getDeltaTime();
-   		if(Gdx.input.isKeyPressed(Keys.DPAD_UP)) 
-      		this.y += 200 * Gdx.graphics.getDeltaTime();
-   		if(Gdx.input.isKeyPressed(Keys.DPAD_DOWN)) 
-      		this.y -= 200 * Gdx.graphics.getDeltaTime();
+    public Rectangle getHitBox() {
+        return hitBox;
     }
+    void colider(Rectangle floor[]){
+        for(Rectangle rect: floor){
+            if(this.hitBox.overlaps(rect)){
+                if(!Gdx.input.isKeyPressed(Keys.DPAD_UP))
+                    speed = 0;
+            }
+        }
+    }
+
+    
 }
 
