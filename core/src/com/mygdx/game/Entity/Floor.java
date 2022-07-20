@@ -1,23 +1,25 @@
-package com.mygdx.game;
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
+package com.mygdx.game.Entity;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.Input.Keys;
+import java.util.ArrayList;
 
 public class Floor extends Entity{
-    public Floor(){
-        setXY(50, 0);
-        this.hitBox = new Rectangle(this.x, this.y, 2000, 50);
+    float w;
+    float h;
+    public Floor(float X, float Y, float w, float h){
+        this.h = h;
+        this.w = w;
+        setXY(X, Y);
+        this.hitBox = new Rectangle(this.x, this.y, w, h);
         this.sprite = new Texture("floor.jpg");
     }
-    void colider(Rectangle floor[]){
+
+    void colider(ArrayList<Floor> rects){
 
     }
 
-    public void update(SpriteBatch batch, Rectangle rects[]){
-        batch.draw(sprite, this.x, this.y, 2000, 50);
+    public void update(SpriteBatch batch, ArrayList<Floor> rects){
+        batch.draw(sprite, this.x, this.y, w, h);
     }
 }
