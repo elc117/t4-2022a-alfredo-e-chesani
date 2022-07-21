@@ -3,6 +3,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.Gdx;
+import java.lang.Math;
 public class Enemy extends Entity{
     MainCharacter target;
     float projX;
@@ -18,14 +19,19 @@ public class Enemy extends Entity{
 
     public void fire(SpriteBatch batch){
         Projectile p = new Projectile(projX, projY, target);
-        if(projX >  target.getX())
-            projX -= 200 * Gdx.graphics.getDeltaTime();
-        if(projX <  target.getX())
-            projX += 200 * Gdx.graphics.getDeltaTime();
-        if(projY >  target.getY())
-            projY -= 200 * Gdx.graphics.getDeltaTime();
-        if(projY <  target.getY())
-            projY += 200 * Gdx.graphics.getDeltaTime();
+        float tx = target.getX();
+        float ty = target.getY();
+
+        double dx = tx - projX;
+        double dy = ty - projY;
+        if(projX > tx)
+            projX += 2*dx * Gdx.graphics.getDeltaTime();
+        if(projX <  tx)
+            projX += 2*dx * Gdx.graphics.getDeltaTime();
+        if(projY >  ty)
+            projY += 2*dy * Gdx.graphics.getDeltaTime();
+        if(projY <  ty)
+            projY += 2*dy * Gdx.graphics.getDeltaTime();
 
         if(p.hitBox.overlaps(target.hitBox)){
             projX = this.x;
