@@ -24,14 +24,8 @@ public class Enemy extends Entity{
 
         double dx = tx - projX;
         double dy = ty - projY;
-        if(projX > tx)
-            projX += 2*dx * Gdx.graphics.getDeltaTime();
-        if(projX <  tx)
-            projX += 2*dx * Gdx.graphics.getDeltaTime();
-        if(projY >  ty)
-            projY += 2*dy * Gdx.graphics.getDeltaTime();
-        if(projY <  ty)
-            projY += 2*dy * Gdx.graphics.getDeltaTime();
+        projX += 2*dx * Gdx.graphics.getDeltaTime();
+        projY += 2*dy * Gdx.graphics.getDeltaTime();
 
         if(p.hitBox.overlaps(target.hitBox)){
             projX = this.x;
