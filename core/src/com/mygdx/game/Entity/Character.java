@@ -12,10 +12,8 @@ public class Character extends Entity
 {
     private boolean isFalling;
     private int moveSpeed = 400;
-    Vector2 direction = new Vector2(0,0);
 
-    public Character()
-    {
+    public Character(){
         this.sprite = new Texture("Colour1/NoOutline/120x80_PNGSheets/_CrouchTransition.png");
         setXY(50, 300);
         this.hitBox = new Rectangle(this.x, this.y, 50, 50);
@@ -23,20 +21,25 @@ public class Character extends Entity
         mass = 50;
     }
 
+
+
     public void move(Rectangle rects[])
     {
         float futureX = 0;
-        float futureY = fallSpeed*Gdx.graphics.getDeltaTime();
+        float futureY = 0;
 
         if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) 
             futureX -= moveSpeed * Gdx.graphics.getDeltaTime();
         if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) 
             futureX += moveSpeed * Gdx.graphics.getDeltaTime();
         if(Gdx.input.isKeyJustPressed(Keys.DPAD_UP) && !isFalling)
+        {
             fallSpeed = 1000;
+        }
 
+        futureY += fallSpeed*Gdx.graphics.getDeltaTime();
         this.hitBox.x += futureX;
-        Rectangle collided = GetCollision(rects);
+        Rectangle collided = this.GetCollision(rects);
 
         if(collided != null)
         {
@@ -44,16 +47,16 @@ public class Character extends Entity
         }
 
         this.hitBox.y += futureY;
-        collided = GetCollision(rects);
-
+        collided = this.GetCollision(rects);
+        
         if(collided != null)
         {
             this.hitBox.y -= futureY;
-            isFalling = false;
-
+            
             if(fallSpeed < 0)
             {
                 hitBox.y = collided.y + collided.height;
+                isFalling = false;
             }
 
             fallSpeed = 0;
@@ -63,8 +66,8 @@ public class Character extends Entity
             isFalling = true;
         }
 
-        y = hitBox.y;
-        x = hitBox.x;
+        this.y = hitBox.y;
+        this.x = hitBox.x;
     }
 
     public void update(SpriteBatch batch, Rectangle rects[])
