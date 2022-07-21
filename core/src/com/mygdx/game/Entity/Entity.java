@@ -25,9 +25,10 @@ public class Entity{
         return hitBox;
     }
 
-    Rectangle colider(Rectangle floor[]){
+    Rectangle GetCollision(Rectangle floor[]){
         for(Rectangle rect: floor){
-            if(this.hitBox.overlaps(rect)){
+            if(this.hitBox.overlaps(rect))
+            {
                 return rect;
             }
         }
