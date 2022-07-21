@@ -12,6 +12,7 @@ public class Floor extends Entity{
         this.w = w;
         setXY(X, Y);
         this.hitBox = new Rectangle(this.x, this.y, w, h);
+        hitBoxes.add(this.hitBox);
         this.sprite = new Texture("floor.jpg");
     }
 
@@ -20,7 +21,7 @@ public class Floor extends Entity{
         return null;
     }
 
-    public void update(SpriteBatch batch, ArrayList<Floor> rects){
+    public void update(SpriteBatch batch){
         batch.draw(sprite, this.x, this.y, w, h);
     }
 }

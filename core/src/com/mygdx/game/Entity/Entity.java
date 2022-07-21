@@ -9,6 +9,7 @@ public class Entity{
     float fallSpeed = 0;
     public float mass = 1;
     public Rectangle hitBox;
+    protected static ArrayList<Rectangle> hitBoxes = new ArrayList<Rectangle>();
 
     //protected Boolean isColliding;
     protected float x;
@@ -27,13 +28,12 @@ public class Entity{
     public Rectangle getHitBox(){
         return hitBox;
     }
-    Rectangle GetCollision(ArrayList<Floor> rects){
-        for(Floor rect: rects){
-            if(this.hitBox.overlaps(rect.getHitBox()))
+    Rectangle GetCollision(){
+        for(Rectangle rect: hitBoxes){
+            if(this.hitBox.overlaps(rect))
             {
-                return rect.hitBox;
+                return rect;
             }    
-                
         }
         return null;
     }

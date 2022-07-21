@@ -18,7 +18,6 @@ public class Stage{
         enemies = new ArrayList<Enemy>();
     }
 
-
     public ArrayList<Floor> getFloors(){
         return floors;
     }
@@ -35,5 +34,10 @@ public class Stage{
         for(Enemy enemy : this.enemies){
             enemy.update(batch);
         }
+
+        for(Floor floor: this.floors){
+            floor.update(batch);
+        }
+
     }
 }

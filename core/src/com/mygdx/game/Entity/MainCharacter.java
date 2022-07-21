@@ -19,7 +19,7 @@ public class MainCharacter extends Entity{
         mass = 25;
     }
 
-    public void move(ArrayList<Floor> rects)
+    public void move()
     {
         float futureX = 0;
         float futureY = 0;
@@ -33,7 +33,7 @@ public class MainCharacter extends Entity{
 
         futureY += fallSpeed*Gdx.graphics.getDeltaTime();
         this.hitBox.x += futureX;
-        Rectangle collided = GetCollision(rects);
+        Rectangle collided = this.GetCollision();
 
         if(collided != null)
         {
@@ -41,7 +41,7 @@ public class MainCharacter extends Entity{
         }
 
         this.hitBox.y += futureY;
-        collided =  GetCollision(rects);
+        collided = this.GetCollision();
         
         if(collided != null)
         {
@@ -64,9 +64,9 @@ public class MainCharacter extends Entity{
         x = hitBox.x;
     }
 
-    public void update(SpriteBatch batch, ArrayList<Floor> rects)
+    public void update(SpriteBatch batch)
     {
-        move(rects);
+        move();
 
         if(fallSpeed > -2000)
         {

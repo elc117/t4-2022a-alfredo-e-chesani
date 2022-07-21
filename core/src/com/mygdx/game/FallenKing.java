@@ -18,13 +18,12 @@ public class FallenKing extends ApplicationAdapter{
 	Texture img;
 	MainCharacter player;
 	Level1 l1;
-	ArrayList<Floor> floors;
+
 	@Override
 	public void create (){
 		player = new MainCharacter();
 		batch = new SpriteBatch();
 		l1 = new Level1(player);
-		floors = l1.getFloors();
 	}
 
 	
@@ -33,10 +32,8 @@ public class FallenKing extends ApplicationAdapter{
 		ScreenUtils.clear(0, 0, 0, 1);
 		batch.begin();
 		l1.update(batch);
-		for(Floor floor : floors){
-			floor.update(batch, floors);
-		}
-		player.update(batch, floors);
+
+		player.update(batch);
 		batch.end();
 	}
 	
