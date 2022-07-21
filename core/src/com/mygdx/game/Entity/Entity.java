@@ -16,6 +16,12 @@ public class Entity{
         this.x = x;
         this.y = y;
     }
+    public float getX() {
+        return x;
+    }
+    public float getY() {
+        return y;
+    }
     public Rectangle getHitBox(){
         return hitBox;
     }

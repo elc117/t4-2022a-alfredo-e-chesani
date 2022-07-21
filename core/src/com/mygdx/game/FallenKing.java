@@ -23,7 +23,7 @@ public class FallenKing extends ApplicationAdapter{
 	public void create (){
 		player = new MainCharacter();
 		batch = new SpriteBatch();
-		l1 = new Level1();
+		l1 = new Level1(player);
 		floors = l1.getFloors();
 	}
 

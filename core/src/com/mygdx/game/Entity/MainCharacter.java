@@ -7,14 +7,13 @@ import com.badlogic.gdx.Input.Keys;
 import java.util.ArrayList;
 
 public class MainCharacter extends Entity{
-
     public MainCharacter(){
-        this.sprite = new Texture("Colour1/NoOutline/120x80_PNGSheets/_CrouchTransition.png");
+        this.sprite = new Texture("character_test.png");
         setXY(50, 300);
-        this.hitBox = new Rectangle(this.x, this.y, 100, 100);
+        this.hitBox = new Rectangle(this.x, this.y, 50, 100);
     }
     public void update(SpriteBatch batch, ArrayList<Floor> rects){
-        batch.draw(sprite, this.x, this.y, 200, 200);
+        batch.draw(sprite, this.x, this.y, 100, 100);
         this.hitBox.x = this.x;
         this.hitBox.y = this.y;
         if(speed > -200){

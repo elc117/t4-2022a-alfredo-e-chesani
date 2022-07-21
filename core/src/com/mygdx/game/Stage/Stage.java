@@ -8,12 +8,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Stage{
 
-    Texture background;
-
+    protected Texture background;
+    protected ArrayList<Enemy> enemies;
     protected ArrayList<Floor> floors;
+    protected MainCharacter mc;
 
     public Stage(){
         floors = new ArrayList<Floor>();
+        enemies = new ArrayList<Enemy>();
     }
 
 
@@ -24,8 +26,14 @@ public class Stage{
     public void addFloor(float x, float y, float w, float h){
         this.floors.add(new Floor(x, y, w, h));
     }
+    public void addEnemy(float x, float y){
+        this.enemies.add(new Enemy(x, y, mc));
+    }
 
     public void update(SpriteBatch batch){
         batch.draw(this.background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        for(Enemy enemy : this.enemies){
+            enemy.update(batch);
+        }
     }
 }
