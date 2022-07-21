@@ -1,25 +1,30 @@
 package com.mygdx.game;
+import java.util.ArrayList;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.game.Stage.Level1;
 import com.badlogic.gdx.Input.Keys;
+import java.util.ArrayList;
+import com.mygdx.game.Entity.*;
+import com.mygdx.game.Stage.*;
 
-public class FallenKing extends ApplicationAdapter {
+public class FallenKing extends ApplicationAdapter{
+	final int n_floor = 4;
 	SpriteBatch batch;
 	Texture img;
-	Character player;
-	Floor floor;
-	Rectangle rectVet[];
+	MainCharacter player;
+	Level1 l1;
+	ArrayList<Floor> floors;
 	@Override
 	public void create (){
-		player = new Character();
+		player = new MainCharacter();
 		batch = new SpriteBatch();
-		floor = new Floor();
-		rectVet = new Rectangle[1];
-		rectVet[0] = floor.getHitBox();
+		l1 = new Level1(player);
+		floors = l1.getFloors();
 	}
 
 	
@@ -27,8 +32,11 @@ public class FallenKing extends ApplicationAdapter {
 	public void render (){
 		ScreenUtils.clear(0, 0, 0, 1);
 		batch.begin();
-		floor.update(batch, rectVet);
-		player.update(batch, rectVet);
+		l1.update(batch);
+		for(Floor floor : floors){
+			floor.update(batch, floors);
+		}
+		player.update(batch, floors);
 		batch.end();
 	}
 	
