@@ -33,7 +33,7 @@ public class Entity{
             if(this.hitBox.overlaps(rect))
             {
                 return rect;
-            }    
+            } 
         }
         return null;
     }

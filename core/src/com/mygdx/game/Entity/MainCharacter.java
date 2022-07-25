@@ -22,17 +22,19 @@ public class MainCharacter extends Entity{
     }
 
     public void hit(){
+        Rectangle collided = this.GetCollision();
         if(gotHit && !isFalling){
             fallSpeed = 1500;
-            new Thread(new Runnable() {
+            System.out.println(fallSpeed);
+            new Thread(new Runnable(){ //usei thread pq se eu tento usar delay sem o programa congela
                 @Override
-                public void run() {
+                public void run(){
                     long time = System.currentTimeMillis();
-                    while (System.currentTimeMillis() < time + 500){} //delay
+                    while (System.currentTimeMillis() < time + 500){} //delay para nao conseguir se mover sem ter caido
                     Gdx.app.postRunnable(new Runnable() {
                         @Override
-                        public void run() {
-                            if(isFalling && fallSpeed != 0)
+                        public void run(){
+                            if(fallSpeed != 0)
                                 gotHit = false;
                         }
                     });
@@ -42,9 +44,9 @@ public class MainCharacter extends Entity{
     }
     public void move()
     {
+        hit();
         futureX = 0;
         futureY = 0;
-        hit();
         if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT) && !gotHit) 
             futureX -= moveSpeed * Gdx.graphics.getDeltaTime();
         if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT) && !gotHit) 
@@ -63,7 +65,6 @@ public class MainCharacter extends Entity{
 
         this.hitBox.y += futureY;
         collided = this.GetCollision();
-        
         if(collided != null)
         {
             this.hitBox.y -= futureY;

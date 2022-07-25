@@ -9,6 +9,6 @@ public class Level1 extends Stage{
         addFloor(0, 0, Gdx.graphics.getWidth(), 50);
         addFloor(200, 200, 200, 50);
         addFloor(400, 400, 200, 50);
-        addEnemy(1400, 0);
+        addEnemy(1000, 0);
     }
 }
