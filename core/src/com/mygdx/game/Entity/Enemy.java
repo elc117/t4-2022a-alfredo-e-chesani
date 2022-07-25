@@ -24,12 +24,13 @@ public class Enemy extends Entity{
 
         double dx = tx - projX;
         double dy = ty - projY;
-        projX += 2*dx * Gdx.graphics.getDeltaTime();
-        projY += 2*dy * Gdx.graphics.getDeltaTime();
+        projX += 2 * dx * Gdx.graphics.getDeltaTime();
+        projY += 2 * dy * Gdx.graphics.getDeltaTime();
 
         if(p.hitBox.overlaps(target.hitBox)){
             projX = this.x;
             projY = this.y + 100;
+            target.gotHit = true;
         }
         p.update(batch);
     }
