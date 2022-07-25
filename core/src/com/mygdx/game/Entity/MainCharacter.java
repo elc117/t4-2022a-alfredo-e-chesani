@@ -12,6 +12,8 @@ public class MainCharacter extends Entity{
     public boolean gotHit = false;
     protected boolean isFalling = false;
     float futureX = 0;
+    protected boolean HitDir;
+    private double deltaImpact;
     public MainCharacter()
     {
         this.sprite = new Texture("character_test.png");
@@ -19,7 +21,9 @@ public class MainCharacter extends Entity{
         this.hitBox = new Rectangle(this.x, this.y, 50, 100);
         mass = 40;
     }
-
+    public void setHitDir(boolean dir){
+        this.HitDir = dir;
+    }
     public boolean hit(){
         Rectangle collided = this.GetCollision();
         if(gotHit && !isFalling){
@@ -42,24 +46,32 @@ public class MainCharacter extends Entity{
         }
         return false;
     }
+    public void impacto(boolean dir){
+        deltaImpact = 0.0000008;
+        if(!dir)
+            deltaImpact = 0 - deltaImpact;
+        new Thread(new Runnable(){ //joga o personagem pro lado quando é atingido
+            @Override
+            public void run(){
+                long time = System.currentTimeMillis();
+                while (System.currentTimeMillis() < time + 700){
+                    futureX += deltaImpact;
+                } //ainda falta ajeitar a direcao que é jogado.
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run(){
+                        
+                    }
+                });
+            }
+        }).start();
+    }
     public void move()
     {
         futureX = 0;
         float futureY = 0;
         if(hit()){ //aqui eu tenho que deslocar o personagem quando ele levar hit
-            new Thread(new Runnable(){ //joga o personagem pro lado quando é atingido
-                @Override
-                public void run(){
-                    long time = System.currentTimeMillis();
-                    while (System.currentTimeMillis() < time + 700){futureX -= 0.0000008;} //ainda falta ajeitar a direcao que é jogado.
-                    Gdx.app.postRunnable(new Runnable() {
-                        @Override
-                        public void run(){
-                            
-                        }
-                    });
-                }
-            }).start();
+            impacto(HitDir);
         }
         if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT) && !gotHit) 
             futureX -= moveSpeed * Gdx.graphics.getDeltaTime();
