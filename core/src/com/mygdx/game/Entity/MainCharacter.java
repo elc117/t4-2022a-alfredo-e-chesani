@@ -78,7 +78,7 @@ public class MainCharacter extends Entity{
         if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT) && !gotHit) 
             futureX += moveSpeed * Gdx.graphics.getDeltaTime();
         if(Gdx.input.isKeyJustPressed(Keys.DPAD_UP) && !isFalling)
-            fallSpeed = 2000;
+            fallSpeed = 1500;
 
         futureY += fallSpeed*Gdx.graphics.getDeltaTime();
         this.hitBox.x += futureX;
