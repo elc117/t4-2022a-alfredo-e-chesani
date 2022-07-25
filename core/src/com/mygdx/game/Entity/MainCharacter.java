@@ -12,7 +12,6 @@ public class MainCharacter extends Entity{
     public boolean gotHit = false;
     protected boolean isFalling = false;
     float futureX = 0;
-    float futureY = 0;
     public MainCharacter()
     {
         this.sprite = new Texture("character_test.png");
@@ -21,11 +20,10 @@ public class MainCharacter extends Entity{
         mass = 40;
     }
 
-    public void hit(){
+    public boolean hit(){
         Rectangle collided = this.GetCollision();
         if(gotHit && !isFalling){
             fallSpeed = 1500;
-            System.out.println(fallSpeed);
             new Thread(new Runnable(){ //usei thread pq se eu tento usar delay sem o programa congela
                 @Override
                 public void run(){
@@ -40,13 +38,29 @@ public class MainCharacter extends Entity{
                     });
                 }
             }).start();
+            return true;
         }
+        return false;
     }
     public void move()
     {
-        hit();
         futureX = 0;
-        futureY = 0;
+        float futureY = 0;
+        if(hit()){ //aqui eu tenho que deslocar o personagem quando ele levar hit
+            new Thread(new Runnable(){ //joga o personagem pro lado quando é atingido
+                @Override
+                public void run(){
+                    long time = System.currentTimeMillis();
+                    while (System.currentTimeMillis() < time + 700){futureX -= 0.0000008;} //ainda falta ajeitar a direcao que é jogado.
+                    Gdx.app.postRunnable(new Runnable() {
+                        @Override
+                        public void run(){
+                            
+                        }
+                    });
+                }
+            }).start();
+        }
         if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT) && !gotHit) 
             futureX -= moveSpeed * Gdx.graphics.getDeltaTime();
         if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT) && !gotHit) 
