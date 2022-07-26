@@ -10,13 +10,18 @@ public class MainCharacter extends Entity{
 
     public float moveSpeed = 800;
     protected boolean isFalling = false;
+    Animator animator;
 
     public MainCharacter()
     {
         this.sprite = new Texture("character_test.png");
         setXY(50, 300);
-        this.hitBox = new Rectangle(this.x, this.y, 50, 100);
+        this.hitBox = new Rectangle(this.x, this.y, 60, 100);
         mass = 25;
+        animator = new Animator();
+        animator.AddAnimation("_CrouchWalk.png", 8, 0.6f, "walk");
+        animator.AddAnimation("_Jump.png", 3, 0.3f, "jump");
+        animator.StartAnimation("walk");
     }
 
     public void move()
@@ -67,12 +72,21 @@ public class MainCharacter extends Entity{
     public void update(SpriteBatch batch)
     {
         move();
+        
+        if(fallSpeed > 1)
+        {
+            animator.StartAnimation("jump");
+        }
+        else
+        {
+            animator.StartAnimation("walk");
+        }
 
         if(fallSpeed > -2000)
         {
             fallSpeed -= mass;
         }
 
-        batch.draw(sprite, this.x, this.y, 50, 100);
+        batch.draw(animator.UpdateFrame(), this.x, this.y, 240, 360);
     }
 }
