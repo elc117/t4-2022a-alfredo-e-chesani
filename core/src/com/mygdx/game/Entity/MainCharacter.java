@@ -2,6 +2,7 @@ package com.mygdx.game.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.Input.Keys;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class MainCharacter extends Entity{
     protected boolean isFalling = false;
 
     float futureX = 0;
+    boolean flip = false;
     protected boolean HitDir;
     private double deltaImpact;
 
@@ -25,7 +27,6 @@ public class MainCharacter extends Entity{
         animator.AddAnimation("_Jump.png", 3, 0.3f, "jump");
         animator.StartAnimation("walk");
 
-        this.sprite = new Texture("character_test.png");
         setXY(50, 200);
         this.hitBox = new Rectangle(this.x, this.y, 50, 100);
         mass = 40;
@@ -80,13 +81,19 @@ public class MainCharacter extends Entity{
     {
         futureX = 0;
         float futureY = 0;
-        if(hit()){ //aqui eu tenho que deslocar o personagem quando ele levar hit
-            impacto(HitDir);
-        }
+       // if(hit()){ //aqui eu tenho que deslocar o personagem quando ele levar hit impacto(HitDir); }
+       gotHit = false;
         if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT) && !gotHit) 
+        {
             futureX -= moveSpeed * Gdx.graphics.getDeltaTime();
+            flip = true;
+        }
         if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT) && !gotHit) 
+        {
             futureX += moveSpeed * Gdx.graphics.getDeltaTime();
+            flip = false;
+        }
+
         if(Gdx.input.isKeyJustPressed(Keys.DPAD_UP) && !isFalling)
             fallSpeed = 1500;
 
@@ -119,6 +126,7 @@ public class MainCharacter extends Entity{
             isFalling = true;
         }
 
+
         y = hitBox.y;
         x = hitBox.x;
     }
@@ -140,7 +148,14 @@ public class MainCharacter extends Entity{
         {
             fallSpeed -= 2*mass;
         }
+        
+        TextureRegion frame = animator.UpdateFrame();
 
-        batch.draw(animator.UpdateFrame(), this.x, this.y, 240, 360);
+        if(flip ^ frame.isFlipX())
+        {
+            frame.flip(true, false);
+        }
+
+        batch.draw(frame, this.x, this.y, 240, 360);
     }
 }
