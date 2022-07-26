@@ -6,10 +6,14 @@ public class Level1 extends Stage{
     public Level1(MainCharacter mc){
         this.background = new Texture("background.png");
         this.mc = mc;
-        addFloor(0, 0, Gdx.graphics.getWidth(), 50);
+        addFloor(0, 0, Gdx.graphics.getWidth(), 50); //chao
+        addFloor(0, 0, 50, Gdx.graphics.getHeight()); //parede da esquerda
+        addFloor(Gdx.graphics.getWidth() - 50, 0, 50, Gdx.graphics.getHeight()); //parede da direita
         addFloor(200, 200, 200, 50);
         addFloor(400, 400, 200, 50);
-        addEnemy(300, 200);
-        addEnemy(500, 400);
+        addFloor(600, 600, 200, 50);
+        addFloor(150, 800, 200, 50);
+        addEnemy(1000, 0);
+        addEnemy(250, 200);
     }
 }
