@@ -24,12 +24,12 @@ public class MainCharacter extends Entity{
     public MainCharacter()
     {
         animator = new Animator();
-        animator.AddAnimation("_CrouchWalk.png", 8, 0.6f, "walk");
+        animator.AddAnimation("_CrouchWalk.png", 9, 0.6f, "walk");
         animator.AddAnimation("_Jump.png", 3, 0.3f, "jump");
         animator.StartAnimation("walk");
 
         setXY(50, 200);
-        this.hitBox = new Rectangle(this.x, this.y, 20, 40);
+        this.hitBox = new Rectangle(this.x, this.y, 70, 100);
         mass = 40;
     }
     public void setHitDir(int dir)
@@ -140,6 +140,6 @@ public class MainCharacter extends Entity{
             frame.flip(true, false);
         }
 
-        batch.draw(frame, this.x, this.y, 240, 360);
+        batch.draw(frame, this.x, this.y, this.hitBox.width, this.hitBox.height);
     }
 }
