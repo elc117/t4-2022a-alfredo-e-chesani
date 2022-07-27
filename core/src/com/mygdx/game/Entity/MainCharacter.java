@@ -16,8 +16,8 @@ public class MainCharacter extends Entity{
 
     boolean flip = false;
     protected int HitDir;
-    private double deltaImpact = 500;
-    private double impactCooldown = 20;
+    private double deltaImpact = 400;
+    private double impactCooldown = 8;
 
     Animator animator;
 
@@ -40,20 +40,18 @@ public class MainCharacter extends Entity{
     //agora apenas aumenta e diminui a velocidade do impacto
     public void impacto()
     {
-        if(gotHit)
-        {
+        if(gotHit){
             gotHit = false;
             hitSpeed = (int)(deltaImpact);
-            fallSpeed += deltaImpact;
+            if(fallSpeed < 0)
+                fallSpeed += 4 * deltaImpact;
             return;
         }   
         
-        if(hitSpeed > 0)
-        {
+        if(hitSpeed > 0){
             hitSpeed -= impactCooldown;
             return;
         }
-
         hitSpeed = 0;
         HitDir = 0;
     }
@@ -63,18 +61,18 @@ public class MainCharacter extends Entity{
         float futureX = 0;
         float futureY = 0;
     
-        if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT) && !gotHit) 
+        if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT) && hitSpeed <= 0) 
         {
             futureX -= moveSpeed * Gdx.graphics.getDeltaTime();
             flip = true;
         }
-        if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT) && !gotHit) 
+        if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT) && hitSpeed <= 0) 
         {
             futureX += moveSpeed * Gdx.graphics.getDeltaTime();
             flip = false;
         }
 
-        if(Gdx.input.isKeyJustPressed(Keys.DPAD_UP) && !isFalling && !gotHit)
+        if(Gdx.input.isKeyJustPressed(Keys.DPAD_UP) && !isFalling && hitSpeed <= 0)
             fallSpeed = 1500;
 
         futureY += fallSpeed*Gdx.graphics.getDeltaTime();
