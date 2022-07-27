@@ -25,9 +25,9 @@ public class Enemy extends Entity{
         double dx = tx - projX;
         double dy = ty - projY;
         if(dx > 0)
-            target.setHitDir(true);
+            target.setHitDir(1);
         if(dx < 0)
-            target.setHitDir(false);
+            target.setHitDir(-1);
         projX += 1.5 * dx * Gdx.graphics.getDeltaTime();
         projY += 1.5 * dy * Gdx.graphics.getDeltaTime();
 

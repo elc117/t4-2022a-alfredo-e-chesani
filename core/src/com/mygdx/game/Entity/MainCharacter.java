@@ -11,12 +11,12 @@ public class MainCharacter extends Entity{
 
     public float moveSpeed = 600;
     public boolean gotHit = false;
+    public int hitSpeed = 0;
     protected boolean isFalling = false;
 
-    float futureX = 0;
     boolean flip = false;
-    protected boolean HitDir;
-    private double deltaImpact;
+    protected int HitDir;
+    private double deltaImpact = 500;
 
     Animator animator;
 
@@ -28,61 +28,39 @@ public class MainCharacter extends Entity{
         animator.StartAnimation("walk");
 
         setXY(50, 200);
-        this.hitBox = new Rectangle(this.x, this.y, 50, 100);
+        this.hitBox = new Rectangle(this.x, this.y, 20, 40);
         mass = 40;
     }
-    public void setHitDir(boolean dir){
+    public void setHitDir(int dir)
+    {
         this.HitDir = dir;
     }
-    public boolean hit(){
-        Rectangle collided = this.GetCollision();
-        if(gotHit && !isFalling){
-            fallSpeed = 1500;
-            new Thread(new Runnable(){ //usei thread pq se eu tento usar delay sem o programa congela
-                @Override
-                public void run(){
-                    long time = System.currentTimeMillis();
-                    while (System.currentTimeMillis() < time + 500){} //delay para nao conseguir se mover sem ter caido
-                    Gdx.app.postRunnable(new Runnable() {
-                        @Override
-                        public void run(){
-                            if(fallSpeed != 0)
-                                gotHit = false;
-                        }
-                    });
-                }
-            }).start();
-            return true;
+
+    public void impacto()
+    {
+        if(gotHit)
+        {
+            gotHit = false;
+            hitSpeed = (int)(deltaImpact);
+            fallSpeed += 800;
+            return;
+        }   
+        
+        if(hitSpeed > 0)
+        {
+            hitSpeed -= 20;
+            return;
         }
-        return false;
-    }
-    public void impacto(boolean dir){
-        deltaImpact = 0.0000008;
-        if(!dir)
-            deltaImpact = 0 - deltaImpact;
-        new Thread(new Runnable(){ //joga o personagem pro lado quando é atingido
-            @Override
-            public void run(){
-                long time = System.currentTimeMillis();
-                while (System.currentTimeMillis() < time + 700){
-                    futureX += deltaImpact;
-                } //ainda falta ajeitar a direcao que é jogado.
-                Gdx.app.postRunnable(new Runnable() {
-                    @Override
-                    public void run(){
 
-                    }
-                });
-            }
-        }).start();
-
+        hitSpeed = 0;
+        HitDir = 0;
     }
+
     public void move()
     {
-        futureX = 0;
+        float futureX = 0;
         float futureY = 0;
-       // if(hit()){ //aqui eu tenho que deslocar o personagem quando ele levar hit impacto(HitDir); }
-       gotHit = false;
+    
         if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT) && !gotHit) 
         {
             futureX -= moveSpeed * Gdx.graphics.getDeltaTime();
@@ -94,10 +72,11 @@ public class MainCharacter extends Entity{
             flip = false;
         }
 
-        if(Gdx.input.isKeyJustPressed(Keys.DPAD_UP) && !isFalling)
+        if(Gdx.input.isKeyJustPressed(Keys.DPAD_UP) && !isFalling && !gotHit)
             fallSpeed = 1500;
 
         futureY += fallSpeed*Gdx.graphics.getDeltaTime();
+        futureX += hitSpeed*HitDir*Gdx.graphics.getDeltaTime();
         this.hitBox.x += futureX;
         Rectangle collided = this.GetCollision();
 
@@ -133,8 +112,10 @@ public class MainCharacter extends Entity{
 
     public void update(SpriteBatch batch)
     {
+        impacto();
         move();
-        
+
+
         if(fallSpeed > 1)
         {
             animator.StartAnimation("jump");
