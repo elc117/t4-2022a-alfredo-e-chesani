@@ -17,6 +17,7 @@ public class MainCharacter extends Entity{
     boolean flip = false;
     protected int HitDir;
     private double deltaImpact = 500;
+    private double impactCooldown = 20;
 
     Animator animator;
 
@@ -36,19 +37,20 @@ public class MainCharacter extends Entity{
         this.HitDir = dir;
     }
 
+    //agora apenas aumenta e diminui a velocidade do impacto
     public void impacto()
     {
         if(gotHit)
         {
             gotHit = false;
             hitSpeed = (int)(deltaImpact);
-            fallSpeed += 800;
+            fallSpeed += deltaImpact;
             return;
         }   
         
         if(hitSpeed > 0)
         {
-            hitSpeed -= 20;
+            hitSpeed -= impactCooldown;
             return;
         }
 
@@ -76,6 +78,7 @@ public class MainCharacter extends Entity{
             fallSpeed = 1500;
 
         futureY += fallSpeed*Gdx.graphics.getDeltaTime();
+        //x movido com base no impacto
         futureX += hitSpeed*HitDir*Gdx.graphics.getDeltaTime();
         this.hitBox.x += futureX;
         Rectangle collided = this.GetCollision();
