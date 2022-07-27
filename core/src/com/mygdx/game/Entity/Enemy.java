@@ -21,7 +21,6 @@ public class Enemy extends Entity{
         Projectile p = new Projectile(projX, projY, target);
         float tx = target.getX();
         float ty = target.getY();
-
         double dx = tx - projX;
         double dy = ty - projY;
         if(dx > 0)
@@ -32,9 +31,9 @@ public class Enemy extends Entity{
         projY += 1.5 * dy * Gdx.graphics.getDeltaTime();
 
         if(p.hitBox.overlaps(target.hitBox)){
+            target.gotHit = true;
             projX = this.x;
             projY = this.y + 100;
-            target.gotHit = true;
         }
         p.update(batch);
     }

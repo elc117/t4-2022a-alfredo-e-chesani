@@ -13,7 +13,7 @@ public class MainCharacter extends Entity{
     public boolean gotHit = false;
     public int hitSpeed = 0;
     protected boolean isFalling = false;
-
+    protected boolean walking = false;
     boolean flip = false;
     protected int HitDir;
     private double deltaImpact = 400;
@@ -26,8 +26,9 @@ public class MainCharacter extends Entity{
         animator = new Animator();
         animator.AddAnimation("_CrouchWalk.png", 9, 0.6f, "walk");
         animator.AddAnimation("_Jump.png", 3, 0.3f, "jump");
-        animator.StartAnimation("walk");
-
+        animator.AddAnimation("_Stand.png", 3, 2f, "stand");
+        animator.StartAnimation("stand");
+        
         setXY(50, 200);
         this.hitBox = new Rectangle(this.x, this.y, 70, 100);
         mass = 40;
@@ -41,6 +42,7 @@ public class MainCharacter extends Entity{
     public void impacto()
     {
         if(gotHit){
+            System.out.println(HitDir);
             gotHit = false;
             hitSpeed = (int)(deltaImpact);
             if(fallSpeed < 0)
@@ -65,13 +67,17 @@ public class MainCharacter extends Entity{
         {
             futureX -= moveSpeed * Gdx.graphics.getDeltaTime();
             flip = true;
+            walking = true;
         }
-        if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT) && hitSpeed <= 0) 
+        else if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT) && hitSpeed <= 0) 
         {
             futureX += moveSpeed * Gdx.graphics.getDeltaTime();
+            walking = true;
             flip = false;
         }
-
+        else{
+            walking = false;
+        }
         if(Gdx.input.isKeyJustPressed(Keys.DPAD_UP) && !isFalling && hitSpeed <= 0)
             fallSpeed = 1500;
 
@@ -117,15 +123,17 @@ public class MainCharacter extends Entity{
         move();
 
 
-        if(fallSpeed > 1)
+        if(isFalling || fallSpeed > 1)
         {
             animator.StartAnimation("jump");
         }
-        else
+        else if(walking)
         {
             animator.StartAnimation("walk");
         }
-
+        else{
+            animator.StartAnimation("stand");
+        }
         if(fallSpeed > -2000)
         {
             fallSpeed -= 2*mass;
