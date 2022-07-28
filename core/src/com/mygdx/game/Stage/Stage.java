@@ -1,7 +1,7 @@
 package com.mygdx.game.Stage;
 import com.mygdx.game.Entity.*;
 import java.util.ArrayList;
-
+import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,13 +9,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Stage{
 
     protected Texture background;
-    protected ArrayList<Enemy> enemies;
+    DelayedRemovalArray <Enemy> enemies;
     protected ArrayList<Floor> floors;
     protected MainCharacter mc;
 
     public Stage(){
         floors = new ArrayList<Floor>();
-        enemies = new ArrayList<Enemy>();
+        enemies = new DelayedRemovalArray<Enemy>();
     }
 
     public ArrayList<Floor> getFloors(){
@@ -32,7 +32,7 @@ public class Stage{
         for(Enemy enemy : this.enemies){
             if(!enemy.getAlive()){
                 enemy = null;
-                enemies.remove(enemy);
+                enemies.removeIndex(0);
             }
         }
     }
