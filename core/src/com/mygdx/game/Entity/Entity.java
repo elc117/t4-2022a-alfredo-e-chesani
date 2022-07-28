@@ -10,7 +10,7 @@ public class Entity{
     public float mass = 1;
     public Rectangle hitBox;
     protected static ArrayList<Rectangle> hitBoxes = new ArrayList<Rectangle>();
-
+    Animator animator;
     //protected Boolean isColliding;
     protected float x;
     protected float y;

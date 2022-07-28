@@ -19,7 +19,6 @@ public class MainCharacter extends Entity{
     private double deltaImpact = 400;
     private double impactCooldown = 8;
 
-    Animator animator;
 
     public MainCharacter()
     {

@@ -4,17 +4,21 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.Gdx;
 import java.lang.Math;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Enemy extends Entity{
     MainCharacter target;
     float projX;
     float projY;
     public Enemy(float x, float y, MainCharacter target){
+        animator = new Animator();
         this.setXY(x, y);
         this.target = target;
-        this.sprite = new Texture("enemy.png");
         this.hitBox = new Rectangle(this.x, this.y, 100, 100);
         this.projX = this.x;
         this.projY = this.y;
+        animator.AddAnimation("_Fire.png", 13, 0.6f, "fire");
+        animator.StartAnimation("fire");
+        //animator.AddAnimation("_Enemy_stand.png", 7, 0.6f, "stand");
     }
 
     public void fire(SpriteBatch batch){
@@ -27,10 +31,11 @@ public class Enemy extends Entity{
             target.setHitDir(1);
         if(dx < 0)
             target.setHitDir(-1);
-        projX += 1.5 * dx * Gdx.graphics.getDeltaTime();
-        projY += 1.5 * dy * Gdx.graphics.getDeltaTime();
+        projX += dx * Gdx.graphics.getDeltaTime();
+        projY += dy * Gdx.graphics.getDeltaTime();
 
         if(p.hitBox.overlaps(target.hitBox)){
+            animator.StartAnimation("fire");
             target.gotHit = true;
             projX = this.x;
             projY = this.y + 100;
@@ -39,7 +44,8 @@ public class Enemy extends Entity{
     }
 
     public void update(SpriteBatch batch){
-        batch.draw(this.sprite, this.x, this.y, 100, 200);
+        TextureRegion frame = animator.UpdateFrame();
+        batch.draw(frame, this.x, this.y, 200, 300);
         fire(batch);
     }
 }
