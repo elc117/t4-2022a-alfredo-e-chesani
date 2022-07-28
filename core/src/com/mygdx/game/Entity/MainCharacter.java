@@ -18,7 +18,8 @@ public class MainCharacter extends Entity{
     protected int HitDir;
     private double deltaImpact = 400;
     private double impactCooldown = 8;
-
+    float w = 70;
+    float h = 100;
 
     public MainCharacter()
     {
@@ -29,7 +30,7 @@ public class MainCharacter extends Entity{
         animator.StartAnimation("stand");
         
         setXY(50, 200);
-        this.hitBox = new Rectangle(this.x, this.y, 70, 100);
+        this.hitBox = new Rectangle(this.x, this.y, this.w, this.h);
         mass = 40;
     }
     public void setHitDir(int dir)
@@ -41,7 +42,6 @@ public class MainCharacter extends Entity{
     public void impacto()
     {
         if(gotHit){
-            System.out.println(HitDir);
             gotHit = false;
             hitSpeed = (int)(deltaImpact);
             if(fallSpeed < 0)
@@ -56,7 +56,10 @@ public class MainCharacter extends Entity{
         hitSpeed = 0;
         HitDir = 0;
     }
-
+    public Rectangle attack(){
+        //width e o alcance do ataque e height/2 e a metade da altura do personagem
+        return new Rectangle(this.x, this.y, 100, h/2);
+    }
     public void move()
     {
         float futureX = 0;
@@ -77,6 +80,7 @@ public class MainCharacter extends Entity{
         else{
             walking = false;
         }
+
         if(Gdx.input.isKeyJustPressed(Keys.DPAD_UP) && !isFalling && hitSpeed <= 0)
             fallSpeed = 1500;
 

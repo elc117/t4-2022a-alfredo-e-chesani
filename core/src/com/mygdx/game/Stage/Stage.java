@@ -28,16 +28,22 @@ public class Stage{
     public void addEnemy(float x, float y){
         this.enemies.add(new Enemy(x, y, mc));
     }
-
+    public void deadDelete(){
+        for(Enemy enemy : this.enemies){
+            if(!enemy.getAlive()){
+                enemy = null;
+                enemies.remove(enemy);
+            }
+        }
+    }
     public void update(SpriteBatch batch){
         batch.draw(this.background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         for(Enemy enemy : this.enemies){
             enemy.update(batch);
         }
-
         for(Floor floor: this.floors){
             floor.update(batch);
         }
-
+        deadDelete();
     }
 }
