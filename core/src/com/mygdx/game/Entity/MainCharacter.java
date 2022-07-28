@@ -116,8 +116,7 @@ public class MainCharacter extends Entity{
         x = hitBox.x;
     }
 
-    public void update(SpriteBatch batch)
-    {
+    public void update(SpriteBatch batch){
         impacto();
         move();
 
