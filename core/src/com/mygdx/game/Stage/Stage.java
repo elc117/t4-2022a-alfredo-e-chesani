@@ -31,8 +31,7 @@ public class Stage{
     public void deadDelete(){
         for(Enemy enemy : this.enemies){
             if(!enemy.getAlive()){
-                enemy = null;
-                enemies.removeIndex(0);
+                enemies.removeValue(enemy, true);
             }
         }
     }
