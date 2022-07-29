@@ -55,7 +55,7 @@ public class Enemy extends Entity{
     }
 
     public boolean death(){
-        if(Gdx.input.isKeyPressed(Keys.SPACE)){
+        if(Gdx.input.isKeyJustPressed(Keys.SPACE)){
             if(target.attack().overlaps(this.hitBox)){
                 animator.StartAnimation("death");
                 return true;

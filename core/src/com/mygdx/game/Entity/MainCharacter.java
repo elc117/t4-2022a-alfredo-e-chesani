@@ -6,9 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.Input.Keys;
 import java.util.ArrayList;
-
+import com.badlogic.gdx.audio.Music;
 public class MainCharacter extends Entity{
-
     public float moveSpeed = 600;
     public boolean gotHit = false;
     public int hitSpeed = 0;
@@ -20,24 +19,25 @@ public class MainCharacter extends Entity{
     private double impactCooldown = 8;
     float w = 70;
     float h = 100;
-
+    TextureRegion frame;
     public MainCharacter()
     {
+        frame = new TextureRegion();
         animator = new Animator();
         animator.AddAnimation("_CrouchWalk.png", 9, 0.6f, "walk");
         animator.AddAnimation("_Jump.png", 3, 0.3f, "jump");
         animator.AddAnimation("_Stand.png", 3, 2f, "stand");
+        animator.AddAnimation("_Slash.png", 6, 0.3f, "slash");
         animator.StartAnimation("stand");
         
         setXY(50, 200);
-        this.hitBox = new Rectangle(this.x, this.y, this.w, this.h);
+        this.hitBox = new Rectangle(this.x, this.y, this.w-10, this.h); //-10 pra corrigir a imagem
         mass = 40;
     }
     public void setHitDir(int dir)
     {
         this.HitDir = dir;
     }
-
     //agora apenas aumenta e diminui a velocidade do impacto
     public void impacto()
     {
@@ -57,7 +57,7 @@ public class MainCharacter extends Entity{
         HitDir = 0;
     }
     public Rectangle attack(){
-        //width e o alcance do ataque e height/2 e a metade da altura do personagem
+        setSound("Sounds/slash.wav");
         return new Rectangle(this.x, this.y, 100, h/2);
     }
     public void move()
@@ -119,35 +119,41 @@ public class MainCharacter extends Entity{
         y = hitBox.y;
         x = hitBox.x;
     }
+    public String getAnimation(){
+        if(Gdx.input.isKeyJustPressed(Keys.SPACE)){
+            return "slash";
+        }
+        if(isFalling || fallSpeed > 1)
+        {
+            return "jump";
+        }
+        else if(walking)
+        {
+            return "walk";
+        }
+
+        else{
+            return "stand";
+        }
+    }
 
     public void update(SpriteBatch batch){
         impacto();
         move();
 
-
-        if(isFalling || fallSpeed > 1)
-        {
-            animator.StartAnimation("jump");
-        }
-        else if(walking)
-        {
-            animator.StartAnimation("walk");
-        }
-        else{
-            animator.StartAnimation("stand");
-        }
+        
         if(fallSpeed > -2000)
         {
             fallSpeed -= 2*mass;
         }
+        animator.StartAnimation(getAnimation());
+        frame = animator.UpdateFrame();
         
-        TextureRegion frame = animator.UpdateFrame();
-
         if(flip ^ frame.isFlipX())
         {
             frame.flip(true, false);
         }
 
-        batch.draw(frame, this.x, this.y, this.hitBox.width, this.hitBox.height);
+        batch.draw(frame, this.x, this.y, this.w, this.h);
     }
 }
