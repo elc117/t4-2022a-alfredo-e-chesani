@@ -40,7 +40,6 @@ public class Animator
             animations.get(animationName).frames[i] = tmp[l][c];
        }
     }
-
     public void AddAnimation(String fileName, int cols, float duration, String animationName)
     {
         AddAnimation(fileName, cols, 1, 0, cols, duration, animationName);

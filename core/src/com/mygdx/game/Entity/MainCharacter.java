@@ -6,57 +6,59 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.Input.Keys;
 import java.util.ArrayList;
-
+import com.badlogic.gdx.audio.Music;
 public class MainCharacter extends Entity{
-
     public float moveSpeed = 600;
     public boolean gotHit = false;
     public int hitSpeed = 0;
     protected boolean isFalling = false;
-
+    protected boolean walking = false;
     boolean flip = false;
     protected int HitDir;
-    private double deltaImpact = 500;
-    private double impactCooldown = 20;
-
-    Animator animator;
-
+    private double deltaImpact = 400;
+    private double impactCooldown = 8;
+    protected float timeAttack;
+    protected boolean attacking;
+    float w = 70;
+    float h = 100;
+    TextureRegion frame;
     public MainCharacter()
     {
+        frame = new TextureRegion();
         animator = new Animator();
-        animator.AddAnimation("_CrouchWalk.png", 8, 0.6f, "walk");
+        animator.AddAnimation("_CrouchWalk.png", 9, 0.6f, "walk");
         animator.AddAnimation("_Jump.png", 3, 0.3f, "jump");
-        animator.StartAnimation("walk");
-
+        animator.AddAnimation("_Stand.png", 3, 2f, "stand");
+        animator.AddAnimation("_Slash.png", 6, 0.3f, "slash");
+        animator.StartAnimation("stand");
+        
         setXY(50, 200);
-        this.hitBox = new Rectangle(this.x, this.y, 20, 40);
+        this.hitBox = new Rectangle(this.x, this.y, this.w-10, this.h); //-10 pra corrigir a imagem
         mass = 40;
     }
     public void setHitDir(int dir)
     {
         this.HitDir = dir;
     }
-
     //agora apenas aumenta e diminui a velocidade do impacto
     public void impacto()
     {
-        if(gotHit)
-        {
+        if(gotHit){
             gotHit = false;
             hitSpeed = (int)(deltaImpact);
-            fallSpeed += deltaImpact;
+            if(fallSpeed < 0)
+                fallSpeed += 4 * deltaImpact;
             return;
         }   
         
-        if(hitSpeed > 0)
-        {
+        if(hitSpeed > 0){
             hitSpeed -= impactCooldown;
             return;
         }
-
         hitSpeed = 0;
         HitDir = 0;
     }
+<<<<<<< HEAD
 
     public void translate(float x, float y)
     {
@@ -64,23 +66,36 @@ public class MainCharacter extends Entity{
         this.y += y;
     }
 
+=======
+    public Rectangle attack(){
+        timeAttack = 0;
+        this.attacking = true;
+        setSound("Sounds/slash.wav");
+        return new Rectangle(this.x, this.y, 100, h/2);
+    }
+>>>>>>> 1d6bfef41b22d539e234fcc4cc54148ac3b360da
     public void move()
     {
         float futureX = 0;
         float futureY = 0;
     
-        if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT) && !gotHit) 
+        if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT) && hitSpeed <= 0) 
         {
             futureX -= moveSpeed * Gdx.graphics.getDeltaTime();
             flip = true;
+            walking = true;
         }
-        if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT) && !gotHit) 
+        else if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT) && hitSpeed <= 0) 
         {
             futureX += moveSpeed * Gdx.graphics.getDeltaTime();
+            walking = true;
             flip = false;
         }
+        else{
+            walking = false;
+        }
 
-        if(Gdx.input.isKeyJustPressed(Keys.DPAD_UP) && !isFalling && !gotHit)
+        if(Gdx.input.isKeyJustPressed(Keys.DPAD_UP) && !isFalling && hitSpeed <= 0)
             fallSpeed = 1500;
 
         futureY += fallSpeed*Gdx.graphics.getDeltaTime();
@@ -118,34 +133,48 @@ public class MainCharacter extends Entity{
         y = hitBox.y;
         x = hitBox.x;
     }
+    public String getAnimation(){
+        if(attacking){
+            return "slash";
+        }
+        if(isFalling || fallSpeed > 1)
+        {
+            return "jump";
+        }
+        else if(walking)
+        {
+            return "walk";
+        }
 
-    public void update(SpriteBatch batch)
-    {
+        else{
+            return "stand";
+        }
+    }
+
+    public void VerifyAttack(){
+        float slashTime = 0.3f;
+        if(attacking && timeAttack < slashTime)
+            timeAttack += Gdx.graphics.getDeltaTime();
+        else if(attacking){
+            attacking = false;
+        }
+    }
+    public void update(SpriteBatch batch){
         impacto();
         move();
-
-
-        if(fallSpeed > 1)
-        {
-            animator.StartAnimation("jump");
-        }
-        else
-        {
-            animator.StartAnimation("walk");
-        }
-
+        VerifyAttack();
+        animator.StartAnimation(getAnimation());
+        frame = animator.UpdateFrame();
         if(fallSpeed > -2000)
         {
             fallSpeed -= 2*mass;
         }
         
-        TextureRegion frame = animator.UpdateFrame();
-
         if(flip ^ frame.isFlipX())
         {
             frame.flip(true, false);
         }
 
-        batch.draw(frame, this.x, this.y, 240, 360);
+        batch.draw(frame, this.x, this.y, this.w, this.h);
     }
 }

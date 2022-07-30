@@ -18,8 +18,7 @@ public class Level1 extends Stage{
         addFloor(400, 400, 200, 50);
         addFloor(600, 600, 200, 50);
         addFloor(150, 800, 200, 50);
-        addEnemy(1000, 0);
-        addEnemy(250, 200);
+        addEnemy(1000, 50);
     }
 
     @Override

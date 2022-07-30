@@ -30,5 +30,4 @@ public class Animation
         time = 0;
     }
 
-    
 }

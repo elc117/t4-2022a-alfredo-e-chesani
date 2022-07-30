@@ -2,13 +2,15 @@ package com.mygdx.game.Entity;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import java.util.ArrayList; 
+import com.badlogic.gdx.audio.Music;
 
 public class Entity{
     float fallSpeed = 0;
     public float mass = 1;
     public Rectangle hitBox;
     protected static ArrayList<Rectangle> hitBoxes = new ArrayList<Rectangle>();
-
+    Animator animator;
+    Music sound;
     //protected Boolean isColliding;
     protected float x;
     protected float y;
@@ -34,5 +36,9 @@ public class Entity{
             } 
         }
         return null;
+    }
+    public void setSound(String path){
+        this.sound = Gdx.audio.newMusic(Gdx.files.internal(path));
+        this.sound.play();
     }
 }
