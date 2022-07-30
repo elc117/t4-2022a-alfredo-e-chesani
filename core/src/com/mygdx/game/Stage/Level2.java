@@ -12,8 +12,8 @@ public class Level2 extends Stage{
         this.stageHeight = Gdx.graphics.getHeight();//segundo andar
 
       //  addFloor(0, 0, Gdx.graphics.getWidth(), 50); //chao
-       //addFloor(0, 0, 50, Gdx.graphics.getHeight()); //parede da esquerda
-       // addFloor(Gdx.graphics.getWidth() - 50, 0, 50, Gdx.graphics.getHeight()); //parede da direita
+         addFloor(0, 0, 50, Gdx.graphics.getHeight()); //parede da esquerda
+        addFloor(Gdx.graphics.getWidth() - 50, 0, 50, Gdx.graphics.getHeight()); //parede da direita
         addFloor(200, 200 + stageHeight, 200, 50);
         addFloor(400, 400 + stageHeight, 200, 50);
         addFloor(600, 600 + stageHeight, 200, 50);

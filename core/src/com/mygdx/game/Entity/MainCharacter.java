@@ -58,7 +58,6 @@ public class MainCharacter extends Entity{
         hitSpeed = 0;
         HitDir = 0;
     }
-<<<<<<< HEAD
 
     public void translate(float x, float y)
     {
@@ -66,14 +65,12 @@ public class MainCharacter extends Entity{
         this.y += y;
     }
 
-=======
     public Rectangle attack(){
         timeAttack = 0;
         this.attacking = true;
         setSound("Sounds/slash.wav");
         return new Rectangle(this.x, this.y, 100, h/2);
     }
->>>>>>> 1d6bfef41b22d539e234fcc4cc54148ac3b360da
     public void move()
     {
         float futureX = 0;
