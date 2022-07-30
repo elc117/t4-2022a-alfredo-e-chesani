@@ -45,6 +45,7 @@ public class Enemy extends Entity{
         projX += dx * Gdx.graphics.getDeltaTime();
         projY += dy * Gdx.graphics.getDeltaTime();
         if(p.hitBox.overlaps(target.hitBox)){
+            setSound("Sounds/spell.wav");
             target.gotHit = true;
             projX = this.x;
             projY = this.y + 100;

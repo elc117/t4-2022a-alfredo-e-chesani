@@ -17,6 +17,8 @@ public class MainCharacter extends Entity{
     protected int HitDir;
     private double deltaImpact = 400;
     private double impactCooldown = 8;
+    protected float timeAttack;
+    protected boolean attacking;
     float w = 70;
     float h = 100;
     TextureRegion frame;
@@ -57,6 +59,8 @@ public class MainCharacter extends Entity{
         HitDir = 0;
     }
     public Rectangle attack(){
+        timeAttack = 0;
+        this.attacking = true;
         setSound("Sounds/slash.wav");
         return new Rectangle(this.x, this.y, 100, h/2);
     }
@@ -120,7 +124,7 @@ public class MainCharacter extends Entity{
         x = hitBox.x;
     }
     public String getAnimation(){
-        if(Gdx.input.isKeyJustPressed(Keys.SPACE)){
+        if(attacking){
             return "slash";
         }
         if(isFalling || fallSpeed > 1)
@@ -137,17 +141,24 @@ public class MainCharacter extends Entity{
         }
     }
 
+    public void VerifyAttack(){
+        float slashTime = 0.3f;
+        if(attacking && timeAttack < slashTime)
+            timeAttack += Gdx.graphics.getDeltaTime();
+        else if(attacking){
+            attacking = false;
+        }
+    }
     public void update(SpriteBatch batch){
         impacto();
         move();
-
-        
+        VerifyAttack();
+        animator.StartAnimation(getAnimation());
+        frame = animator.UpdateFrame();
         if(fallSpeed > -2000)
         {
             fallSpeed -= 2*mass;
         }
-        animator.StartAnimation(getAnimation());
-        frame = animator.UpdateFrame();
         
         if(flip ^ frame.isFlipX())
         {
