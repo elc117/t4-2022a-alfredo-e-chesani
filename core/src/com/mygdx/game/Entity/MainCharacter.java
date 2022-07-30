@@ -58,6 +58,12 @@ public class MainCharacter extends Entity{
         HitDir = 0;
     }
 
+    public void translate(float x, float y)
+    {
+        this.x += x;
+        this.y += y;
+    }
+
     public void move()
     {
         float futureX = 0;

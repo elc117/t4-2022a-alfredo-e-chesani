@@ -2,7 +2,9 @@ package com.mygdx.game.Stage;
 import com.mygdx.game.Entity.*;
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -12,6 +14,8 @@ public class Stage{
     protected ArrayList<Enemy> enemies;
     protected ArrayList<Floor> floors;
     protected MainCharacter mc;
+    protected GameScreen game;
+    public float stageHeight;
 
     public Stage(){
         floors = new ArrayList<Floor>();
@@ -29,8 +33,13 @@ public class Stage{
         this.enemies.add(new Enemy(x, y, mc));
     }
 
+    protected void checkEndLevel()
+    {
+
+    }
+
     public void update(SpriteBatch batch){
-        batch.draw(this.background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(this.background, 0, stageHeight, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         for(Enemy enemy : this.enemies){
             enemy.update(batch);
         }
@@ -39,5 +48,7 @@ public class Stage{
             floor.update(batch);
         }
 
+        checkEndLevel();
     }
 }
+

@@ -1,8 +1,6 @@
 package com.mygdx.game.Entity;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.Input.Keys;
 import java.util.ArrayList; 
 
 public class Entity{
