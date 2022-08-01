@@ -2,6 +2,7 @@ package com.mygdx.game.Entity;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.DelegateAction;
 import com.badlogic.gdx.Gdx;
 import java.lang.Math;
@@ -23,10 +24,10 @@ public class Enemy extends Entity{
         this.hitBox = new Rectangle(this.x, this.y, 100, 100);
         this.projX = this.x;
         this.projY = this.y;
-        animator.AddAnimation("_Fire.png", 13, 1f, "fire");
-        animator.AddAnimation("_EnemyStand.png", 13, 1f, "stand");
-        animator.AddAnimation("_EnemyDeath.png", 8, 2f, "death");
-        animator2.AddAnimation("_Spell.png", 5, 0.3f, "spell");
+        animator.AddAnimation("fire.png", 13, 1f, "fire");
+        animator.AddAnimation("enemyStand.png", 13, 1f, "stand");
+        animator.AddAnimation("enemyDeath.png", 8, 2f, "death");
+        animator2.AddAnimation("spell.png", 5, 0.3f, "spell");
         animator.StartAnimation("stand");
         animator2.StartAnimation("spell");
     }
@@ -39,12 +40,14 @@ public class Enemy extends Entity{
         float ty = target.getY();
         double dx = tx - projX;
         double dy = ty - projY;
+        Vector2 normal = new Vector2((float)dx,(float)dy);
+
         if(dx > 0)
             target.setHitDir(1);
         if(dx < 0)
             target.setHitDir(-1);
-        projX += dx * Gdx.graphics.getDeltaTime();
-        projY += dy * Gdx.graphics.getDeltaTime();
+        projX += normal.nor().x * 500 * Gdx.graphics.getDeltaTime();
+        projY += normal.nor().y * 500 * Gdx.graphics.getDeltaTime();
         if(p.hitBox.overlaps(target.hitBox)){
             setSound("Sounds/spell.wav");
             target.gotHit = true;
