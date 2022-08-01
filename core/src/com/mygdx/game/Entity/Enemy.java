@@ -13,6 +13,7 @@ public class Enemy extends Entity{
     float projY;
     protected boolean alive;
     Animator animator2;
+    float deathTime = -1;
     public Enemy(float x, float y, MainCharacter target){
         animator = new Animator();
         animator2 = new Animator();
@@ -57,12 +58,24 @@ public class Enemy extends Entity{
 
     public boolean death(){
         if(Gdx.input.isKeyJustPressed(Keys.SPACE)){
-            if(target.attack().overlaps(this.hitBox)){
+            if(target.attack().overlaps(this.hitBox)){                
+                deathTime = 0;
                 animator.StartAnimation("death");
-                return true;
+                return false;
             }
         }
-        return false;
+
+        if(deathTime != -1)
+        {
+            deathTime+= Gdx.graphics.getDeltaTime();
+        }
+
+        if(deathTime < 1.9f)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     public void update(SpriteBatch batch){
