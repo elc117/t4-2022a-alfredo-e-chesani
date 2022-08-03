@@ -10,10 +10,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.Input.Keys;
 public class Enemy extends Entity{
     MainCharacter target;
+    
     float projX;
     float projY;
     protected boolean alive;
     Animator animator2;
+    Projectile p = null;
     float deathTime = -1;
     public Enemy(float x, float y, MainCharacter target){
         animator = new Animator();
@@ -35,28 +37,37 @@ public class Enemy extends Entity{
         return alive;
     }
     public void fire(SpriteBatch batch){
-        Projectile p = new Projectile(projX, projY);
         float tx = target.getX();
         float ty = target.getY();
-        double dx = tx - projX;
-        double dy = ty - projY;
-        Vector2 normal = new Vector2((float)dx,(float)dy);
+        float dx = tx - x;
+        float dy = ty - y;
+
+        if(p == null)
+        {
+            p = new Projectile(x,y, new Vector2(dx,dy));
+        }
 
         if(dx > 0)
             target.setHitDir(1);
         if(dx < 0)
             target.setHitDir(-1);
-        projX += normal.nor().x * 500 * Gdx.graphics.getDeltaTime();
-        projY += normal.nor().y * 500 * Gdx.graphics.getDeltaTime();
-        if(p.hitBox.overlaps(target.hitBox)){
+        
+        if(p != null && p.hitBox.overlaps(target.hitBox)){
             setSound("Sounds/spell.wav");
             target.gotHit = true;
-            projX = this.x;
-            projY = this.y + 100;
+            p = null;
             animator.StartAnimation("fire");
         }
+        else{
+            for(Rectangle f : this.hitBoxes){
+                if(p!= null && p.hitBox.overlaps(f)){
+                    p = null;
+                }
+            }
+        }
         TextureRegion frame_spell = animator2.UpdateFrame();
-        p.update(batch, frame_spell);
+        if(p != null)
+            p.update(batch, frame_spell);
     }
 
     public boolean death(){
