@@ -17,7 +17,8 @@ public class Stage{
     protected MainCharacter mc;
     protected GameScreen game;
     public float stageHeight;
-
+    float sw = Gdx.graphics.getWidth();
+    float sh = Gdx.graphics.getHeight();
     public Stage(){
         floors = new ArrayList<Floor>();
         enemies = new DelayedRemovalArray<Enemy>();
@@ -47,7 +48,9 @@ public class Stage{
         }
     }
     public void update(SpriteBatch batch){
-        batch.draw(this.background, 0, stageHeight, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        sw = Gdx.graphics.getWidth();
+        sh = Gdx.graphics.getHeight();
+        batch.draw(this.background, 0, stageHeight, sw, sh);
         for(Enemy enemy : this.enemies){
             enemy.update(batch);
         }
@@ -59,4 +62,3 @@ public class Stage{
         deadDelete();
     }
 }
-
