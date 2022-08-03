@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Entity.Animator;
 
-public class TitleScreen extends ScreenAdapter
+public class EndScreen extends ScreenAdapter
 {
     SpriteBatch batch;
     Game game;
@@ -28,7 +28,7 @@ public class TitleScreen extends ScreenAdapter
     Vector2 buttonSize = new Vector2(250, 150);
 
 
-    public TitleScreen(SpriteBatch batch, Game game)
+    public EndScreen(SpriteBatch batch, Game game)
     {
         this.game = game;
         this.batch = batch;

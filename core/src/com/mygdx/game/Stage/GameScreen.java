@@ -1,11 +1,12 @@
 package com.mygdx.game.Stage;
-
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Entity.MainCharacter;
@@ -15,8 +16,13 @@ public class GameScreen extends ScreenAdapter
     MainCharacter player;
     OrthographicCamera camera;
     Music castleTheme;
-    Stage currentStage;
-	ArrayList<Stage> stages;
+
+    Texture pause;
+
+    com.mygdx.game.Stage.Stage currentStage;
+    boolean paused = false;
+	ArrayList<com.mygdx.game.Stage.Stage> stages;
+
     SpriteBatch batch;
     int width;
     int height;
@@ -25,7 +31,9 @@ public class GameScreen extends ScreenAdapter
     {
         this.batch = batch;
         this.player = new MainCharacter();
-        stages = new ArrayList<Stage>();
+        stages = new ArrayList<com.mygdx.game.Stage.Stage>();
+        
+        pause = new Texture(Gdx.files.internal("pause.png"));
     }
 
     @Override
@@ -48,16 +56,29 @@ public class GameScreen extends ScreenAdapter
     @Override
     public void render(float delta)
     {
-		ScreenUtils.clear(0, 0, 0, 1);
         camera.update();
         batch.setProjectionMatrix(camera.combined);
+        batch.begin();
+
+        if(Gdx.input.isKeyJustPressed(Keys.ESCAPE))
+        {
+            paused = (paused == false);
+        }
         
-		batch.begin();
+        if(paused)
+        {
+            int x = width/2 - pause.getWidth()/2;
+            int y = height/2 - pause.getHeight()/2;
+            batch.draw(pause, x, y);
+        }
+        else
+        {
+            ScreenUtils.clear(0, 0, 0, 1);
 
-		currentStage.update(batch);
-		player.update(batch);
-
-		batch.end();
+            currentStage.update(batch);
+            player.update(batch);
+        }
+        batch.end();
     }
 
     //função a ser chamada pelos próprios stages
@@ -65,4 +86,7 @@ public class GameScreen extends ScreenAdapter
     {
         currentStage = stages.get(index);
     }
+
+
 }
+
