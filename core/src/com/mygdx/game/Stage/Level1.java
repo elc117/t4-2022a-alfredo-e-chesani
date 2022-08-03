@@ -2,7 +2,6 @@ package com.mygdx.game.Stage;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Entity.MainCharacter;
 import com.badlogic.gdx.Gdx;
-
 public class Level1 extends Stage{
     public Level1(GameScreen game)
     {
@@ -10,10 +9,11 @@ public class Level1 extends Stage{
         this.background = new Texture("background.png");
         this.mc = game.player;
         this.stageHeight = 0; //primeiro andar começa na altura zero
+        float z = game.getZoom();
 
-        addFloor(0, 0, Gdx.graphics.getWidth(), 50); //chao
-        addFloor(0, 0, 50, Gdx.graphics.getHeight()); //parede da esquerda
-        addFloor(Gdx.graphics.getWidth() - 50, 0, 50, Gdx.graphics.getHeight()); //parede da direita
+        addFloor(0-(sw/z), 0-(sh/z), sw*z, 50); //chao
+        addFloor(0-(sw/z), 0-(sh/z), 50, sh*z); //parede da esquerda
+        addFloor(sw+(sw/z)-50, 0-(sh/z), 50, sh*z); //parede da direita
         addFloor(200, 200, 200, 50);
         addFloor(400, 400, 200, 50);
         addFloor(600, 600, 200, 50);
