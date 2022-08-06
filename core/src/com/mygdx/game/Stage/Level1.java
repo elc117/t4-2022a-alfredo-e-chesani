@@ -19,7 +19,7 @@ public class Level1 extends Stage{
         //plataformas
         addFloor(sw*90/100 + sh/z, 0-(sh/z)*55/100, 200, fd);
         addFloor(sw*80/100, 0-(sh/z)*20/100, 200, fd);
-        addEnemy((sw+sw/z)-ew*z, 0-(sh/z)+(sh*4/100), ew);
+        addEnemy((sw+sw/z)-ew*1.3f, 0-(sh/z)+(sh*4/100), ew);
     }
 
     @Override

@@ -19,8 +19,8 @@ public class MainCharacter extends Entity{
     private double impactCooldown = 8;
     protected float timeAttack;
     protected boolean attacking;
-    float w;
-    float h;
+    public float w;
+    public float h;
     TextureRegion frame;
     public MainCharacter()
     {
@@ -71,7 +71,7 @@ public class MainCharacter extends Entity{
         timeAttack = 0;
         this.attacking = true;
         setSound("Sounds/slash.wav");
-        return new Rectangle(this.x, this.y, 100, h/2);
+        return new Rectangle(this.x, this.y, w*2, h/2);
     }
     public void move()
     {

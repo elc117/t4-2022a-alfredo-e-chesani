@@ -10,13 +10,14 @@ public class Projectile extends Entity{
     public Projectile(float x, float y, Vector2 direcao){
         this.direcao = direcao;
         setXY(x, y);
-        this.hitBox = new Rectangle(this.x, this.y, 50, 50);
+        float lado = Gdx.graphics.getWidth()*3/100;
+        this.hitBox = new Rectangle(this.x, this.y, lado, lado);
     }
 
     public void update(SpriteBatch batch, TextureRegion frame){
         batch.draw(frame, this.x, this.y, this.hitBox.width, this.hitBox.height);
-        this.x += direcao.nor().x * 700 * Gdx.graphics.getDeltaTime();
-        this.y += direcao.nor().y * 700 * Gdx.graphics.getDeltaTime();
+        this.x += direcao.nor().x * 1400 * Gdx.graphics.getDeltaTime();
+        this.y += direcao.nor().y * 1400 * Gdx.graphics.getDeltaTime();
         this.hitBox.x = this.x;
         this.hitBox.y = this.y;
     }

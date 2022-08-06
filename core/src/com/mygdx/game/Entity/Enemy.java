@@ -25,7 +25,7 @@ public class Enemy extends Entity{
         this.setXY(x, y);
         this.target = target;
         this.alive = true;
-        this.hitBox = new Rectangle(this.x, this.y, w, w*1.5f);
+        this.hitBox = new Rectangle(this.x, this.y, w, w*2f);
         this.projX = this.x;
         this.projY = this.y;
         animator.AddAnimation("fire.png", 13, 1f, "fire");
@@ -40,13 +40,13 @@ public class Enemy extends Entity{
     }
     public void fire(SpriteBatch batch){
         float tx = target.getX();
-        float ty = target.getY();
+        float ty = target.getY() + target.h/2f; //mirando no peito
         float dx = tx - x;
-        float dy = ty - y;
+        float dy = ty - (y+hitBox.height);
 
         if(p == null)
         {
-            p = new Projectile(x, y, new Vector2(dx,dy));
+            p = new Projectile(x, y + hitBox.height, new Vector2(dx,dy));
         }
 
         if(dx > 0)
