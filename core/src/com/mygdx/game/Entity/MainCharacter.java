@@ -26,10 +26,10 @@ public class MainCharacter extends Entity{
     {
         frame = new TextureRegion();
         animator = new Animator();
-        animator.AddAnimation("_CrouchWalk.png", 9, 0.6f, "walk");
-        animator.AddAnimation("_Jump.png", 3, 0.3f, "jump");
-        animator.AddAnimation("_Stand.png", 3, 2f, "stand");
-        animator.AddAnimation("_Slash.png", 6, 0.3f, "slash");
+        animator.AddAnimation("walk.png", 9, 0.6f, "walk");
+        animator.AddAnimation("jump.png", 3, 0.3f, "jump");
+        animator.AddAnimation("stand.png", 3, 2f, "stand");
+        animator.AddAnimation("slash.png", 6, 0.3f, "slash");
         animator.StartAnimation("stand");
         
         setXY(50, 200);
@@ -76,13 +76,13 @@ public class MainCharacter extends Entity{
         float futureX = 0;
         float futureY = 0;
     
-        if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT) && hitSpeed <= 0) 
+        if(Gdx.input.isKeyPressed(Keys.A) && hitSpeed <= 0) 
         {
             futureX -= moveSpeed * Gdx.graphics.getDeltaTime();
             flip = true;
             walking = true;
         }
-        else if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT) && hitSpeed <= 0) 
+        else if(Gdx.input.isKeyPressed(Keys.D) && hitSpeed <= 0) 
         {
             futureX += moveSpeed * Gdx.graphics.getDeltaTime();
             walking = true;
@@ -92,7 +92,7 @@ public class MainCharacter extends Entity{
             walking = false;
         }
 
-        if(Gdx.input.isKeyJustPressed(Keys.DPAD_UP) && !isFalling && hitSpeed <= 0)
+        if(Gdx.input.isKeyJustPressed(Keys.W) && !isFalling && hitSpeed <= 0)
             fallSpeed = 1500;
 
         futureY += fallSpeed*Gdx.graphics.getDeltaTime();

@@ -2,6 +2,7 @@ package com.mygdx.game.Stage;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Entity.MainCharacter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.viewport.*;
 public class Level1 extends Stage{
     public Level1(GameScreen game)
     {
@@ -24,7 +25,7 @@ public class Level1 extends Stage{
     @Override
     protected void checkEndLevel()
     {
-        float height = Gdx.graphics.getHeight();
+        int height = Gdx.graphics.getHeight();
 
         if(mc.getY() > height)
         {
