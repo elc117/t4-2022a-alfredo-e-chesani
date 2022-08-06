@@ -13,17 +13,19 @@ public class Enemy extends Entity{
     
     float projX;
     float projY;
+    float w;
     protected boolean alive;
     Animator animator2;
     Projectile p = null;
     float deathTime = -1;
-    public Enemy(float x, float y, MainCharacter target){
+    public Enemy(float x, float y, MainCharacter target, float w){
+        this.w = w;
         animator = new Animator();
         animator2 = new Animator();
         this.setXY(x, y);
         this.target = target;
         this.alive = true;
-        this.hitBox = new Rectangle(this.x, this.y, 100, 100);
+        this.hitBox = new Rectangle(this.x, this.y, w, w*1.5f);
         this.projX = this.x;
         this.projY = this.y;
         animator.AddAnimation("fire.png", 13, 1f, "fire");
@@ -44,7 +46,7 @@ public class Enemy extends Entity{
 
         if(p == null)
         {
-            p = new Projectile(x,y, new Vector2(dx,dy));
+            p = new Projectile(x, y, new Vector2(dx,dy));
         }
 
         if(dx > 0)
@@ -103,7 +105,7 @@ public class Enemy extends Entity{
         if(this.x < target.x && frame.isFlipX()){
             frame.flip(true, false);
         }
-        batch.draw(frame, this.x, this.y, 200, 300);
+        batch.draw(frame, this.x, this.y, this.hitBox.width, this.hitBox.height);
         fire(batch);
     }
 }

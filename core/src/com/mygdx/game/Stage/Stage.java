@@ -17,8 +17,11 @@ public class Stage{
     protected MainCharacter mc;
     protected GameScreen game;
     public float stageHeight;
+    float z; //zoom
     float sw = Gdx.graphics.getWidth();
     float sh = Gdx.graphics.getHeight();
+    
+    float fd; //espessura dos floors
     public Stage(){
         floors = new ArrayList<Floor>();
         enemies = new DelayedRemovalArray<Enemy>();
@@ -31,8 +34,8 @@ public class Stage{
     public void addFloor(float x, float y, float w, float h){
         this.floors.add(new Floor(x, y, w, h));
     }
-    public void addEnemy(float x, float y){
-        this.enemies.add(new Enemy(x, y, mc));
+    public void addEnemy(float x, float y, float h){
+        this.enemies.add(new Enemy(x, y, mc, h));
     }
 
     protected void checkEndLevel()
