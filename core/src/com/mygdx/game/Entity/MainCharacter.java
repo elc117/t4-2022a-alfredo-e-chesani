@@ -19,21 +19,23 @@ public class MainCharacter extends Entity{
     private double impactCooldown = 8;
     protected float timeAttack;
     protected boolean attacking;
-    float w = 70;
-    float h = 100;
+    public float w;
+    public float h;
     TextureRegion frame;
     public MainCharacter()
     {
+
+        w = Gdx.graphics.getWidth() * 3/100;
+        h = w * 1.5f;
         frame = new TextureRegion();
         animator = new Animator();
-        animator.AddAnimation("_CrouchWalk.png", 9, 0.6f, "walk");
-        animator.AddAnimation("_Jump.png", 3, 0.3f, "jump");
-        animator.AddAnimation("_Stand.png", 3, 2f, "stand");
-        animator.AddAnimation("_Slash.png", 6, 0.3f, "slash");
+        animator.AddAnimation("walk.png", 9, 0.6f, "walk");
+        animator.AddAnimation("jump.png", 3, 0.3f, "jump");
+        animator.AddAnimation("stand.png", 3, 2f, "stand");
+        animator.AddAnimation("slash.png", 6, 0.3f, "slash");
         animator.StartAnimation("stand");
-        
-        setXY(50, 200);
-        this.hitBox = new Rectangle(this.x, this.y, this.w-10, this.h); //-10 pra corrigir a imagem
+        setXY(0-(Gdx.graphics.getWidth()/2)+w, 0-(Gdx.graphics.getHeight()/2)); //posicao 0 0
+        this.hitBox = new Rectangle(this.x, this.y, this.w, this.h); //-10 pra corrigir a imagem
         mass = 40;
     }
     public void setHitDir(int dir)
@@ -69,20 +71,20 @@ public class MainCharacter extends Entity{
         timeAttack = 0;
         this.attacking = true;
         setSound("Sounds/slash.wav");
-        return new Rectangle(this.x, this.y, 100, h/2);
+        return new Rectangle(this.x, this.y, w*2, h/2);
     }
     public void move()
     {
         float futureX = 0;
         float futureY = 0;
     
-        if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT) && hitSpeed <= 0) 
+        if(Gdx.input.isKeyPressed(Keys.A) && hitSpeed <= 0) 
         {
             futureX -= moveSpeed * Gdx.graphics.getDeltaTime();
             flip = true;
             walking = true;
         }
-        else if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT) && hitSpeed <= 0) 
+        else if(Gdx.input.isKeyPressed(Keys.D) && hitSpeed <= 0) 
         {
             futureX += moveSpeed * Gdx.graphics.getDeltaTime();
             walking = true;
@@ -92,7 +94,7 @@ public class MainCharacter extends Entity{
             walking = false;
         }
 
-        if(Gdx.input.isKeyJustPressed(Keys.DPAD_UP) && !isFalling && hitSpeed <= 0)
+        if(Gdx.input.isKeyJustPressed(Keys.W) && !isFalling && hitSpeed <= 0)
             fallSpeed = 1500;
 
         futureY += fallSpeed*Gdx.graphics.getDeltaTime();

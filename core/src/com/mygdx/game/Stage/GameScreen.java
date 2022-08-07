@@ -19,7 +19,7 @@ public class GameScreen extends ScreenAdapter
     OrthographicCamera camera;
     Game game;
     Music castleTheme;
-
+    float zoom = 2;
     Texture pause;
 
     com.mygdx.game.Stage.Stage currentStage;
@@ -56,8 +56,12 @@ public class GameScreen extends ScreenAdapter
         height = Gdx.graphics.getHeight();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, width, height);
-    }
+        camera.zoom = this.zoom;
 
+    }
+    public float getZoom(){
+        return this.zoom;
+    }
     @Override
     public void render(float delta)
     {

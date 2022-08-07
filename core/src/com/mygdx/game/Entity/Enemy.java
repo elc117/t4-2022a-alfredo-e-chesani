@@ -10,18 +10,22 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.Input.Keys;
 public class Enemy extends Entity{
     MainCharacter target;
+    
     float projX;
     float projY;
+    float w;
     protected boolean alive;
     Animator animator2;
+    Projectile p = null;
     float deathTime = -1;
-    public Enemy(float x, float y, MainCharacter target){
+    public Enemy(float x, float y, MainCharacter target, float w){
+        this.w = w;
         animator = new Animator();
         animator2 = new Animator();
         this.setXY(x, y);
         this.target = target;
         this.alive = true;
-        this.hitBox = new Rectangle(this.x, this.y, 100, 100);
+        this.hitBox = new Rectangle(this.x, this.y, w, w*2f);
         this.projX = this.x;
         this.projY = this.y;
         animator.AddAnimation("fire.png", 13, 1f, "fire");
@@ -35,28 +39,37 @@ public class Enemy extends Entity{
         return alive;
     }
     public void fire(SpriteBatch batch){
-        Projectile p = new Projectile(projX, projY);
         float tx = target.getX();
-        float ty = target.getY();
-        double dx = tx - projX;
-        double dy = ty - projY;
-        Vector2 normal = new Vector2((float)dx,(float)dy);
+        float ty = target.getY() + target.h/2f; //mirando no peito
+        float dx = tx - x;
+        float dy = ty - (y+hitBox.height);
+
+        if(p == null)
+        {
+            p = new Projectile(x, y + hitBox.height, new Vector2(dx,dy));
+        }
 
         if(dx > 0)
             target.setHitDir(1);
         if(dx < 0)
             target.setHitDir(-1);
-        projX += normal.nor().x * 500 * Gdx.graphics.getDeltaTime();
-        projY += normal.nor().y * 500 * Gdx.graphics.getDeltaTime();
-        if(p.hitBox.overlaps(target.hitBox)){
+        
+        if(p != null && p.hitBox.overlaps(target.hitBox)){
             setSound("Sounds/spell.wav");
             target.gotHit = true;
-            projX = this.x;
-            projY = this.y + 100;
+            p = null;
             animator.StartAnimation("fire");
         }
+        else{
+            for(Rectangle f : this.hitBoxes){
+                if(p!= null && p.hitBox.overlaps(f)){
+                    p = null;
+                }
+            }
+        }
         TextureRegion frame_spell = animator2.UpdateFrame();
-        p.update(batch, frame_spell);
+        if(p != null)
+            p.update(batch, frame_spell);
     }
 
     public boolean death(){
@@ -92,7 +105,7 @@ public class Enemy extends Entity{
         if(this.x < target.x && frame.isFlipX()){
             frame.flip(true, false);
         }
-        batch.draw(frame, this.x, this.y, 200, 300);
+        batch.draw(frame, this.x, this.y, this.hitBox.width, this.hitBox.height);
         fire(batch);
     }
 }

@@ -13,7 +13,7 @@ public class King extends Entity
     public King(MainCharacter player)
     {
         animator = new Animator();
-        animator.AddAnimation("_Stand.png", 3, 0.5f, "kingStand");
+        animator.AddAnimation("stand.png", 3, 0.5f, "kingStand");
         animator.StartAnimation("kingStand");
         this.player = player;
     }
