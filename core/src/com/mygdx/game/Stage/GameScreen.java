@@ -1,6 +1,7 @@
 package com.mygdx.game.Stage;
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.Input.Keys;
@@ -9,12 +10,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.game.Entity.King;
 import com.mygdx.game.Entity.MainCharacter;
 
 public class GameScreen extends ScreenAdapter
 {
     MainCharacter player;
     OrthographicCamera camera;
+    Game game;
     Music castleTheme;
 
     Texture pause;
@@ -27,10 +30,12 @@ public class GameScreen extends ScreenAdapter
     int width;
     int height;
     
-    public GameScreen(SpriteBatch batch)
+    public GameScreen(SpriteBatch batch, Game game)
     {
         this.batch = batch;
         this.player = new MainCharacter();
+        this.game = game;
+
         stages = new ArrayList<com.mygdx.game.Stage.Stage>();
         
         pause = new Texture(Gdx.files.internal("pause.png"));

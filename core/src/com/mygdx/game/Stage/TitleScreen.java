@@ -56,7 +56,7 @@ public class TitleScreen extends ScreenAdapter
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 theme.stop();
-                game.setScreen(new GameScreen(batch));
+                game.setScreen(new GameScreen(batch, game));
             }
         });
 

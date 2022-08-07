@@ -15,12 +15,14 @@ public class Stage{
     DelayedRemovalArray <Enemy> enemies;
     protected ArrayList<Floor> floors;
     protected MainCharacter mc;
-    protected GameScreen game;
+    protected GameScreen gameScreen;
+    protected King king;
     public float stageHeight;
 
     public Stage(){
         floors = new ArrayList<Floor>();
         enemies = new DelayedRemovalArray<Enemy>();
+        king = null;
     }
 
     public ArrayList<Floor> getFloors(){
@@ -53,6 +55,11 @@ public class Stage{
         }
         for(Floor floor: this.floors){
             floor.update(batch);
+        }
+
+        if(king != null)
+        {
+            king.update(batch);
         }
 
         checkEndLevel();

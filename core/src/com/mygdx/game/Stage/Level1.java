@@ -6,7 +6,7 @@ import com.badlogic.gdx.Gdx;
 public class Level1 extends Stage{
     public Level1(GameScreen game)
     {
-        this.game = game;
+        this.gameScreen = game;
         this.background = new Texture("background.png");
         this.mc = game.player;
         this.stageHeight = 0; //primeiro andar começa na altura zero
@@ -28,9 +28,9 @@ public class Level1 extends Stage{
 
         if(mc.getY() > height)
         {
-            game.updateStage(1);
-            game.camera.position.y += height;
-            game.camera.update();
+            gameScreen.updateStage(1);
+            gameScreen.camera.position.y += height;
+            gameScreen.camera.update();
         }
     }
 }

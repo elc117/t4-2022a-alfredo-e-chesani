@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 
-public class Entity{
+public class Entity
+{
     float fallSpeed = 0;
     public float mass = 1;
     public Rectangle hitBox;

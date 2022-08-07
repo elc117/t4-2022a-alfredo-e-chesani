@@ -1,13 +1,17 @@
 package com.mygdx.game.Stage;
 import com.badlogic.gdx.graphics.Texture;
+import com.mygdx.game.Entity.King;
 import com.mygdx.game.Entity.MainCharacter;
 import com.badlogic.gdx.Gdx;
 
 public class Level2 extends Stage{
+    King king;
+    
     public Level2(GameScreen game)
     {
-        this.game = game;
+        this.gameScreen = game;
         this.background = new Texture("background.png");
+        king = new King(game.player);
         this.mc = game.player;
         this.stageHeight = Gdx.graphics.getHeight();//segundo andar
 
@@ -28,9 +32,15 @@ public class Level2 extends Stage{
 
         if(mc.getY() < height)
         {
-            game.updateStage(0);
-            game.camera.position.y -= height;
-            game.camera.update();
+            gameScreen.updateStage(0);
+            gameScreen.camera.position.y -= height;
+            gameScreen.camera.update();
         }
+
+        if(king != null && king.hitBox.overlaps(mc.hitBox))
+        {
+            gameScreen.game.setScreen(new TitleScreen(gameScreen.batch, gameScreen.game));
+        }
+
     }
 }
