@@ -32,8 +32,9 @@ public class LevelBarrear extends Entity
         width = Gdx.graphics.getWidth();
 
         zoom = 2;
-        setXY(-(zoom - 1)*width/2, height + (zoom - 1)*height/2 - size);
+        setXY(-(zoom - 1)*width/2, (height + (zoom - 1)*height/2)*stage.stageHeight - size);
         this.hitBox = new Rectangle(x,y,width*zoom,size);
+        this.hitBoxes.add(this.hitBox);
     }
 
 
