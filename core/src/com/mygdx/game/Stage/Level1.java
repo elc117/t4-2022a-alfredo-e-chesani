@@ -1,7 +1,7 @@
 package com.mygdx.game.Stage;
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.Entity.MainCharacter;
-import com.badlogic.gdx.Gdx;
+import com.mygdx.game.Entity.King;
+
 public class Level1 extends Stage{
     float ew = sw * 8/100; //largura do inimigo
     public Level1(GameScreen game)
@@ -9,6 +9,7 @@ public class Level1 extends Stage{
     {
         this.gameScreen = game;
         this.background = new Texture("background.png");
+        king.setXY(-50, -50);
         this.mc = game.player;
         this.stageHeight = 0; //primeiro andar começa na altura zero
         z = game.getZoom();

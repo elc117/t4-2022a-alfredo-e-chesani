@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Stage{
 
     protected Texture background;
-    DelayedRemovalArray <Enemy> enemies;
+    protected DelayedRemovalArray <Enemy> enemies;
     protected ArrayList<Floor> floors;
     protected MainCharacter mc;
     protected GameScreen gameScreen;
