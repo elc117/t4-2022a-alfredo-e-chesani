@@ -2,20 +2,19 @@ package com.mygdx.game.Stage;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Entity.King;
+import com.mygdx.game.Entity.LevelBarrear;
 
 public class Level1 extends Stage{
+
     float ew = width * 8/100; //largura do inimigo
+
     public Level1(GameScreen game)
     {
-        super(1);
-        this.gameScreen = game;
+        super.gameScreen = game;
         this.background = new Texture("background.png");
-        this.stageHeight = 1;
        // king = new King(mc, new Rectangle(0,0,50,50));
         //king.setXY(-50, -50);
         this.mc = game.player;
-
-        this.stageHeight = 0; //primeiro andar começa na altura zero
         zoom = game.getZoom();
  
         addFloor(0, 0, 1*zoom, 0.05f); //chao
@@ -28,13 +27,14 @@ public class Level1 extends Stage{
         addFloor(1.6f, 1.4f, 0.3f, 0.08f);
         addFloor(1.8f, 1.8f, 0.3f, 0.08f);
 
-        //inimigo tá igual pq não entendi como esse tamnho dele funciona
-        addEnemy(40, 40, 100);
+        addEnemy(20, 20);
+        super.stageHeight = 1;
+        super.barrear = new LevelBarrear(this);
     }
-
     @Override
     protected void checkEndLevel()
     {
+
         if(mc.getY() > height*zoom - offsetY)
         {
             gameScreen.updateStage(1);

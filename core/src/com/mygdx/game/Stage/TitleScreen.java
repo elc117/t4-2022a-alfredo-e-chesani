@@ -59,7 +59,13 @@ public class TitleScreen extends ScreenAdapter
                 game.setScreen(new GameScreen(batch, game));
             }
         });
-
+        sair.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                Gdx.app.exit();
+            }
+        });
+    
         Gdx.input.setInputProcessor(stage);
         stage.addActor(play);
         stage.addActor(sair);

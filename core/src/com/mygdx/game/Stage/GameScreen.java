@@ -53,8 +53,9 @@ public class GameScreen extends ScreenAdapter
         stages.add(new Level1(this));
         stages.add(new Level2(this));
         castleTheme = Gdx.audio.newMusic(Gdx.files.internal("castle.mp3"));
-        //      stages.add(new Level3(player));
-        
+        castleTheme.setLooping(true);
+//      stages.add(new Level3(player));
+
         //level inicial
         castleTheme.play();
         currentStage = stages.get(0);
@@ -110,7 +111,5 @@ public class GameScreen extends ScreenAdapter
     {
         currentStage = stages.get(index);
     }
-
-
 }
 

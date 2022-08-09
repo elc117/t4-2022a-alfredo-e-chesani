@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
-
 public class LevelBarrear extends Entity
 {
     private com.mygdx.game.Stage.Stage stage;
@@ -28,8 +27,10 @@ public class LevelBarrear extends Entity
         animator.AddAnimation("barrearOpening.png", 5, 1, 4, 1, 999.0f, "open");
         animator.StartAnimation("closed");
 
-        height = Gdx.graphics.getHeight();
-        width = Gdx.graphics.getWidth();
+        int h = Gdx.graphics.getHeight();
+        height = h + h/2;
+        int w = Gdx.graphics.getWidth();
+        width = w * 2;
 
         zoom = 2;
         setXY(-(zoom - 1)*width/2, (height + (zoom - 1)*height/2)*stage.stageHeight - size);
@@ -37,6 +38,7 @@ public class LevelBarrear extends Entity
         this.hitBoxes.add(this.hitBox);
     }
 
+    
 
     public void update(SpriteBatch batch)
     {
@@ -56,7 +58,7 @@ public class LevelBarrear extends Entity
         {
             animator.StartAnimation("open");
         }
+
         batch.draw(animator.UpdateFrame(), x, y, width*zoom, size);
     }
-
 }
