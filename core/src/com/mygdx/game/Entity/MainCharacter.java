@@ -95,7 +95,7 @@ public class MainCharacter extends Entity{
         }
 
         if(Gdx.input.isKeyJustPressed(Keys.W) && !isFalling && hitSpeed <= 0)
-            fallSpeed = 1500;
+            fallSpeed = 1800;
 
         futureY += fallSpeed*Gdx.graphics.getDeltaTime();
         //x movido com base no impacto

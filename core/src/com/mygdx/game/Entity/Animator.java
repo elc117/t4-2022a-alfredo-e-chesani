@@ -29,7 +29,6 @@ public class Animator
         int height = newSheet.getHeight();
 
         TextureRegion[][] tmp = TextureRegion.split(newSheet, width/cols, height/rows);
-        System.out.println("w = " + width/cols + "h = " + height/rows);
         animations.put(animationName, new Animation(lenght, duration));
 
        for(int i = 0; i < lenght; i++)

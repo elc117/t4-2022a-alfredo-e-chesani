@@ -43,8 +43,8 @@ public class Stage{
     public void addFloor(float x, float y, float w, float h){
         this.floors.add(new Floor(x, y, w, h));
     }
-    public void addEnemy(float x, float y, float h){
-        this.enemies.add(new Enemy(x, y, mc, h));
+    public void addEnemy(float x, float y){
+        this.enemies.add(new Enemy(x, y, mc));
     }
 
     protected void checkEndLevel()

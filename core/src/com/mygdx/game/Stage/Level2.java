@@ -10,10 +10,12 @@ public class Level2 extends Stage{
     public Level2(GameScreen game)
     {
         this.gameScreen = game;
+        float z = game.getZoom();
         this.background = new Texture("background.png");
         this.mc = game.player;
-        this.stageHeight = Gdx.graphics.getHeight();//segundo andar
-
+        float h = Gdx.graphics.getHeight();
+        this.stageHeight =  h + h/z;//segundo andar
+        
       //  addFloor(0, 0, Gdx.graphics.getWidth(), 50); //chao
          //addFloor(0, 0, 50, Gdx.graphics.getHeight()); //parede da esquerda
         //addFloor(Gdx.graphics.getWidth() - 50, 0, 50, Gdx.graphics.getHeight()); //parede da direita
@@ -27,16 +29,17 @@ public class Level2 extends Stage{
     @Override
     protected void checkEndLevel()
     {
-        float height = Gdx.graphics.getHeight();
+        float h = Gdx.graphics.getHeight();
+        float height = h + h/2;
 
         if(mc.getY() < height)
         {
             gameScreen.updateStage(0);
-            gameScreen.camera.position.y -= height;
+            gameScreen.camera.position.y -= sw;
             gameScreen.camera.update();
         }
 
-        if(king != null && king.hitBox.overlaps(mc.hitBox))
+        if(king != null && mc.attack().overlaps(king.hitBox))
         {
             gameScreen.game.setScreen(new TitleScreen(gameScreen.batch, gameScreen.game));
         }

@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Entity.King;
 
 public class Level1 extends Stage{
-    float ew = sw * 8/100; //largura do inimigo
     public Level1(GameScreen game)
     
     {
@@ -15,20 +14,36 @@ public class Level1 extends Stage{
         this.mc = game.player;
         this.stageHeight = 0; //primeiro andar começa na altura zero
         z = game.getZoom();
-        float fd = sw / 50; //espessura dos floors
+        float fd = 50; //espessura dos floors
         addFloor(0-(sw/z), 0-(sh/z), sw*z, fd); //chao
         addFloor(0-(sw/z), 0-(sh/z), fd, sh*z); //parede da esquerda
         addFloor(sw+(sw/z)-fd, 0-(sh/z), fd, sh*z); //parede da direita
         //plataformas
-        addFloor(sw*90/100 + sh/z, 0-(sh/z)*55/100, 200, fd);
-        addFloor(sw*80/100, 0-(sh/z)*20/100, 200, fd);
-        addEnemy((sw+sw/z)-ew*1.3f, 0-(sh/z)+(sh*4/100), ew);
+        addFloor(2300, 0-(sh/z) + 200, 200, fd);
+        addFloor(2650, 0-(sh/z) + 500, 200, fd);
+        addFloor(2450, 0-(sh/z) + 850, 200, fd);
+        addFloor(1850, 0-(sh/z) + 650, 200, fd);
+        addFloor(1300, 0-(sh/z) + 950, 200, fd);
+        addFloor(850, 0-(sh/z) + 1150, 200, fd);
+        addFloor(500, 0-(sh/z) + 1450, 200, fd);
+        addFloor(100, 0-(sh/z) + 850, 200, fd);
+        addFloor(-400, 0-(sh/z) + 650, 200, fd);
+        addFloor(-300, 0-(sh/z) + 1200, 200, fd);
+        addFloor(-450, 0-(sh/z) + 1500, 200, fd);
+        addFloor(0, 0-(sh/z) + 1800, 200, fd);
+        addFloor(0-(sw/z) + 50, 0-(sh/z) + 850, 200, fd);
+        addFloor(2650, 0-(sh/z) + 1200, 200, fd);
+        addFloor(0-(sw/z) + 50, 0-(sh/z) + 1500, 200, fd);
+        addEnemy(0-(sw/z) + 50, 0-(sh/z) + 1500+50);
+        addEnemy(0-(sw/z) + 50, 0-(sh/z) + 850+50);
+        addEnemy(2715, 0-(sh/z)+50);
+        addEnemy(2700, 0-(sh/z) + 1200 + 50);
     }
 
     @Override
     protected void checkEndLevel()
     {
-        if(mc.getY() > sh)
+        if(mc.getY() > sh+(sh/z))
         {
             gameScreen.updateStage(1);
             gameScreen.camera.position.y += sw;
