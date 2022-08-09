@@ -19,15 +19,22 @@ public class Stage{
     protected GameScreen gameScreen;
     protected King king;
     public float stageHeight;
-    float z; //zoom
-    float sw = Gdx.graphics.getWidth();
-    float sh = Gdx.graphics.getHeight();
+    protected int height;
+    protected int width;
+    public float offsetX;
+    public float offsetY;
+    public float zoom;
     
     float fd; //espessura dos floors
     public Stage(){
         floors = new ArrayList<Floor>();
         enemies = new DelayedRemovalArray<Enemy>();
         barrear = new LevelBarrear(this);
+        width = Gdx.graphics.getWidth();
+        height = Gdx.graphics.getHeight();
+        offsetX = -width*(zoom-1)/2;
+        offsetY = -height*(zoom-1)/2;
+
         king = null;
     }
 
@@ -40,11 +47,18 @@ public class Stage{
         return this.enemies;
     }
 
-    public void addFloor(float x, float y, float w, float h){
-        this.floors.add(new Floor(x, y, w, h));
+    public void addFloor(float x, float y, float w, float h)
+    {
+        x *= width;
+        y *= height;
+        w *= width;
+        h *= height;
+        
+        this.floors.add(new Floor(x - offsetX, y - offsetY, w, h));
     }
-    public void addEnemy(float x, float y, float h){
-        this.enemies.add(new Enemy(x, y, mc, h));
+    public void addEnemy(float x, float y, float h)
+    {
+        this.enemies.add(new Enemy(x - offsetX, y - offsetY, mc, h));
     }
 
     protected void checkEndLevel()
@@ -60,9 +74,7 @@ public class Stage{
         }
     }
     public void update(SpriteBatch batch){
-        sw = Gdx.graphics.getWidth();
-        sh = Gdx.graphics.getHeight();
-        batch.draw(this.background, 0, stageHeight, sw, sh);
+        batch.draw(this.background, 0 - offsetX, stageHeight - offsetY, width*zoom, height*zoom);
         for(Enemy enemy : this.enemies){
             enemy.update(batch);
         }

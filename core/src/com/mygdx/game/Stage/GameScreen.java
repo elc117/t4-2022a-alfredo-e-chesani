@@ -10,6 +10,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Entity.King;
 import com.mygdx.game.Entity.MainCharacter;
 
@@ -19,7 +24,7 @@ public class GameScreen extends ScreenAdapter
     OrthographicCamera camera;
     Game game;
     Music castleTheme;
-    float zoom = 2;
+    public float zoom = 2;
     Texture pause;
 
     com.mygdx.game.Stage.Stage currentStage;
@@ -29,6 +34,7 @@ public class GameScreen extends ScreenAdapter
     SpriteBatch batch;
     int width;
     int height;
+    Viewport viewport;
     
     public GameScreen(SpriteBatch batch, Game game)
     {
@@ -47,8 +53,8 @@ public class GameScreen extends ScreenAdapter
         stages.add(new Level1(this));
         stages.add(new Level2(this));
         castleTheme = Gdx.audio.newMusic(Gdx.files.internal("castle.mp3"));
-//      stages.add(new Level3(player));
-
+        //      stages.add(new Level3(player));
+        
         //level inicial
         castleTheme.play();
         currentStage = stages.get(0);
@@ -57,15 +63,17 @@ public class GameScreen extends ScreenAdapter
         camera = new OrthographicCamera();
         camera.setToOrtho(false, width, height);
         camera.zoom = this.zoom;
-
+        viewport = new FitViewport(width, height, camera);
     }
     public float getZoom(){
         return this.zoom;
     }
+
     @Override
     public void render(float delta)
     {
         camera.update();
+
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
@@ -88,6 +96,13 @@ public class GameScreen extends ScreenAdapter
             player.update(batch);
         }
         batch.end();
+    }
+
+    @Override
+    public void resize(int widthi, int heighti) 
+    {
+        viewport.update(widthi, heighti);
+        camera.update();
     }
 
     //função a ser chamada pelos próprios stages

@@ -8,7 +8,7 @@ import com.badlogic.gdx.Input.Keys;
 import java.util.ArrayList;
 import com.badlogic.gdx.audio.Music;
 public class MainCharacter extends Entity{
-    public float moveSpeed = 600;
+    public float moveSpeed = 400;
     public boolean gotHit = false;
     public int hitSpeed = 0;
     protected boolean isFalling = false;
@@ -25,8 +25,8 @@ public class MainCharacter extends Entity{
     public MainCharacter()
     {
 
-        w = Gdx.graphics.getWidth() * 3/100;
-        h = w * 1.5f;
+        w = Gdx.graphics.getWidth() * 6/100;
+        h = w * 2.3f;
         frame = new TextureRegion();
         animator = new Animator();
         animator.AddAnimation("walk.png", 9, 0.6f, "walk");
@@ -34,7 +34,7 @@ public class MainCharacter extends Entity{
         animator.AddAnimation("stand.png", 3, 2f, "stand");
         animator.AddAnimation("slash.png", 6, 0.3f, "slash");
         animator.StartAnimation("stand");
-        setXY(0-(Gdx.graphics.getWidth()/2)+w, 0-(Gdx.graphics.getHeight()/2)); //posicao 0 0
+        setXY(0, 0);
         this.hitBox = new Rectangle(this.x, this.y, this.w, this.h); //-10 pra corrigir a imagem
         mass = 40;
     }

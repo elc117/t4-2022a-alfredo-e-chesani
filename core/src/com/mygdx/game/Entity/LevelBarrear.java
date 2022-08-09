@@ -16,6 +16,7 @@ public class LevelBarrear extends Entity
     private boolean isOpen = false;
     private int height;
     private int width;
+    private float zoom;
     public int size = 25;
 
     public LevelBarrear(com.mygdx.game.Stage.Stage stage)
@@ -30,14 +31,14 @@ public class LevelBarrear extends Entity
         height = Gdx.graphics.getHeight();
         width = Gdx.graphics.getWidth();
 
-        setXY(0, height - size);
-        this.hitBox = new Rectangle(x,y,width,size);
+        zoom = 2;
+        setXY(-(zoom - 1)*width/2, height + (zoom - 1)*height/2 - size);
+        this.hitBox = new Rectangle(x,y,width*zoom,size);
     }
 
 
     public void update(SpriteBatch batch)
     {
-       
         DelayedRemovalArray list = stage.GetEnemyList();
         
         if(list.size == 0 && !isOpen)
@@ -54,7 +55,7 @@ public class LevelBarrear extends Entity
         {
             animator.StartAnimation("open");
         }
-        batch.draw(animator.UpdateFrame(), x, y, width, size);
+        batch.draw(animator.UpdateFrame(), x, y, width*zoom, size);
     }
 
 }

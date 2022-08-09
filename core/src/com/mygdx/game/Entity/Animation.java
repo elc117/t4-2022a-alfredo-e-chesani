@@ -32,6 +32,7 @@ public class Animation
         if(time >= duration)
         {
             time = 0;
+            currentFrame = frames.length - 1;
         }
         
         return frames[currentFrame];
