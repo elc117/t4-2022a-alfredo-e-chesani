@@ -1,5 +1,6 @@
 package com.mygdx.game.Stage;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Entity.King;
 
 public class Level1 extends Stage{
@@ -9,6 +10,7 @@ public class Level1 extends Stage{
     {
         this.gameScreen = game;
         this.background = new Texture("background.png");
+        king = new King(mc, new Rectangle(0,0,50,50));
         king.setXY(-50, -50);
         this.mc = game.player;
         this.stageHeight = 0; //primeiro andar começa na altura zero

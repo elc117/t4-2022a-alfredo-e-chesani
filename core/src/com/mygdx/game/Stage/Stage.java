@@ -13,6 +13,7 @@ public class Stage{
 
     protected Texture background;
     protected DelayedRemovalArray <Enemy> enemies;
+    protected LevelBarrear barrear;
     protected ArrayList<Floor> floors;
     protected MainCharacter mc;
     protected GameScreen gameScreen;
@@ -26,11 +27,17 @@ public class Stage{
     public Stage(){
         floors = new ArrayList<Floor>();
         enemies = new DelayedRemovalArray<Enemy>();
+        barrear = new LevelBarrear(this);
         king = null;
     }
 
     public ArrayList<Floor> getFloors(){
         return floors;
+    }
+
+    public DelayedRemovalArray<Enemy> GetEnemyList()
+    {
+        return this.enemies;
     }
 
     public void addFloor(float x, float y, float w, float h){
@@ -67,6 +74,8 @@ public class Stage{
         {
             king.update(batch);
         }
+
+        barrear.update(batch);
 
         checkEndLevel();
         deadDelete();

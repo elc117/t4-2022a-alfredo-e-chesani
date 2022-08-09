@@ -11,7 +11,6 @@ public class Level2 extends Stage{
     {
         this.gameScreen = game;
         this.background = new Texture("background.png");
-        king = new King(game.player);
         this.mc = game.player;
         this.stageHeight = Gdx.graphics.getHeight();//segundo andar
 

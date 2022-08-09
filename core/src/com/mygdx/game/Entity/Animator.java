@@ -45,6 +45,11 @@ public class Animator
         AddAnimation(fileName, cols, 1, 0, cols, duration, animationName);
     }
 
+    public boolean CheckLoop()
+    {
+        return animations.get(curretAnimation).hasLooped;
+    }
+
     public TextureRegion UpdateFrame()
     {
         return animations.get(curretAnimation).GetFrame();

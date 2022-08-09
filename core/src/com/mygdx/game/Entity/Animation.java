@@ -9,7 +9,8 @@ public class Animation
     public TextureRegion frames[]; 
     float duration;
     float time;
-    
+    public boolean hasLooped = false;
+
     public Animation(int length, float duration)
     {
         frames = new TextureRegion[length];
@@ -19,9 +20,20 @@ public class Animation
 
     public TextureRegion GetFrame()
     {
-        time = (Gdx.graphics.getDeltaTime() + time) % duration;
+        time += Gdx.graphics.getDeltaTime();
+        
+        if((int)(time/duration) == 1)
+        {
+            hasLooped = true;
+        }
+        
         int currentFrame = (int)((frames.length - 1)*(time/duration));
-
+        
+        if(time >= duration)
+        {
+            time = 0;
+        }
+        
         return frames[currentFrame];
     }
 
