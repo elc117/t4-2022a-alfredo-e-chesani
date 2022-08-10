@@ -13,7 +13,6 @@ public class LevelBarrear extends Entity
     private Animator animator;
     private boolean hasLooped = false;
     private boolean isOpen = false;
-    private int height;
     private int width;
     private float zoom;
     public int size = 25;
@@ -28,12 +27,12 @@ public class LevelBarrear extends Entity
         animator.StartAnimation("closed");
 
         int h = Gdx.graphics.getHeight();
-        height = h + h/2;
+        int offset = h + h/2;
         int w = Gdx.graphics.getWidth();
         width = w * 2;
 
         zoom = 2;
-        setXY(-(zoom - 1)*width/2, height*stage.stageHeight - size);
+        setXY(-(zoom - 1)*width/2, offset + h*zoom*(stage.stageHeight - 1) - size);
         this.hitBox = new Rectangle(x,y,width*zoom,size);
         this.hitBoxes.add(this.hitBox);
     }

@@ -8,10 +8,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class EndScreen extends ScreenAdapter
@@ -21,6 +23,7 @@ public class EndScreen extends ScreenAdapter
     int width;
     int height;
     Texture background;
+    Stage stage;
     Music theme;
     Vector2 buttonSize = new Vector2(250, 150);
 
@@ -37,6 +40,19 @@ public class EndScreen extends ScreenAdapter
         height = Gdx.graphics.getHeight();
         theme = Gdx.audio.newMusic(Gdx.files.internal("menu.mp3"));
         background = new Texture("endGame.png");
+
+        stage = new Stage();
+        Button voltar = createButton("voltar.pack", new Rectangle(100,100,200,200));
+
+        voltar.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                theme.stop();
+                game.setScreen(new TitleScreen(batch, game));
+            }
+        });
+
+        stage.addActor(voltar);
     }
 
     @Override
@@ -48,6 +64,8 @@ public class EndScreen extends ScreenAdapter
         batch.draw(background, 0, 0, width, height);
         batch.end();
 
+        stage.act(delta);
+        stage.draw();
     }
   
     @Override

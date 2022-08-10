@@ -13,7 +13,8 @@ public class Level1 extends Stage{
        // king = new King(mc, new Rectangle(0,0,50,50));
         //king.setXY(-50, -50);
         this.mc = game.player;
-        zoom = game.getZoom();
+        SetZoom(2);
+        SetHeight(1);
  
         addFloor(0, 0, 1*zoom, 0.02f); //chao
         addFloor(0.1f, 0, 0.02f, 1*zoom); //parede da esquerda
@@ -32,10 +33,10 @@ public class Level1 extends Stage{
         addFloor(0f+0.1f, 1.4f, 0.1f, 0.05f);
         
         //inimigos
-        addEnemy(1.8f, 0);
-        addEnemy(1.8f, 1.3f);
-        addEnemy(0f+0.1f+0.02f, 0.6f);
-        addEnemy(0f+0.1f+0.02f, 1.4f);
+        //addEnemy(1.8f, 0);
+        //addEnemy(1.8f, 1.3f);
+        //addEnemy(0f+0.1f+0.02f, 0.6f);
+        //addEnemy(0f+0.1f+0.02f, 1.4f);
         super.stageHeight = 1;
         super.barrear = new LevelBarrear(this);
     }
@@ -46,7 +47,7 @@ public class Level1 extends Stage{
         if(mc.getY() > height*zoom - offsetY)
         {
             gameScreen.updateStage(1);
-            gameScreen.camera.position.y += height;
+            gameScreen.camera.position.y += height*zoom;
             gameScreen.camera.update();
         }
     }

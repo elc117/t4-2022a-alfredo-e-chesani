@@ -11,6 +11,7 @@ public class DesktopLauncher {
 		config.setForegroundFPS(60);
 		config.setTitle("Fallen King");
 		config.setWindowedMode(1920, 1080);
+		config.setMaximized(true);
 		new Lwjgl3Application(new FallenKing(), config);
 	}
 }
