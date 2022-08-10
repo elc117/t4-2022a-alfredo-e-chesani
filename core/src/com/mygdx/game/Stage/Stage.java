@@ -33,7 +33,6 @@ public class Stage{
         height = Gdx.graphics.getHeight();
         offsetX = -width*(zoom-1)/2;
         offsetY = -height*(zoom-1)/2;
-
         king = null;
     }
 

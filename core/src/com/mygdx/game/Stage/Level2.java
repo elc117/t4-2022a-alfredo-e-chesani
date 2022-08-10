@@ -14,8 +14,6 @@ public class Level2 extends Stage{
         this.zoom = game.getZoom();
         this.background = new Texture("background.png");
         this.mc = game.player;
-
-        this.stageHeight = 0; //primeiro andar começa na altura zero
         zoom = game.getZoom();
  
         //addFloor(0, 0, 1*zoom, 0.05f); //chao
