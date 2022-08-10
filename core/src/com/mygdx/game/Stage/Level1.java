@@ -33,10 +33,10 @@ public class Level1 extends Stage{
         addFloor(0f+0.1f, 1.4f, 0.1f, 0.05f);
         
         //inimigos
-        //addEnemy(1.8f, 0);
-        //addEnemy(1.8f, 1.3f);
-        //addEnemy(0f+0.1f+0.02f, 0.6f);
-        //addEnemy(0f+0.1f+0.02f, 1.4f);
+        addEnemy(1.8f, 0);
+        addEnemy(1.8f, 1.3f);
+        addEnemy(0f+0.1f+0.02f, 0.6f);
+        addEnemy(0f+0.1f+0.02f, 1.4f);
         super.stageHeight = 1;
         super.barrear = new LevelBarrear(this);
     }
