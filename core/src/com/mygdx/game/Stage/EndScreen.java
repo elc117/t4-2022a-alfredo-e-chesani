@@ -42,7 +42,7 @@ public class EndScreen extends ScreenAdapter
         background = new Texture("endGame.png");
 
         stage = new Stage();
-        Button voltar = createButton("voltar.pack", new Rectangle(100,100,200,200));
+        Button voltar = createButton("voltar.pack", new Rectangle(100,20,200,150));
 
         voltar.addListener(new ChangeListener() {
             @Override
@@ -64,6 +64,7 @@ public class EndScreen extends ScreenAdapter
         batch.draw(background, 0, 0, width, height);
         batch.end();
 
+        Gdx.input.setInputProcessor(stage);
         stage.act(delta);
         stage.draw();
     }
