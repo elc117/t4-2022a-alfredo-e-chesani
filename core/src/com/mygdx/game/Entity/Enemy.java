@@ -39,18 +39,20 @@ public class Enemy extends Entity{
     public void fire(SpriteBatch batch){
         float tx = target.getX();
         float ty = target.getY() + target.h/2f; //mirando no peito
-        float dx = tx - x;
-        float dy = ty - (y+hitBox.height-80);
+        float dx = tx - this.x;
+        float dy = ty - (this.y+hitBox.height-80);
 
         if(p == null)
         {
             p = new Projectile(x, y + hitBox.height-80, new Vector2(dx,dy));
         }
 
-        if(dx > 0)
+        if(dx > 0){
             target.setHitDir(1);
-        if(dx < 0)
+        }
+        else{
             target.setHitDir(-1);
+        }
         
         if(p != null && p.hitBox.overlaps(target.hitBox)){
             setSound("Sounds/spell.wav");

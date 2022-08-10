@@ -59,7 +59,7 @@ public class Stage{
     {
         x *= width;
         y *= height;
-        this.enemies.add(new Enemy(x - offsetX, y - offsetY, mc));
+        this.enemies.add(new Enemy(x - offsetX, y + 30 - offsetY, mc));
     }
 
     protected void checkEndLevel()
