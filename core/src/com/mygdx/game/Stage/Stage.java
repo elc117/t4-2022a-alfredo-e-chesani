@@ -57,6 +57,8 @@ public class Stage{
 
     public void addEnemy(float x, float y)
     {
+        x *= width;
+        y *= height;
         this.enemies.add(new Enemy(x - offsetX, y - offsetY, mc));
     }
 
