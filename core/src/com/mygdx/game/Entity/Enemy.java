@@ -23,14 +23,13 @@ public class Enemy extends Entity{
         this.setXY(x, y);
         this.target = target;
         this.alive = true;
-        this.hitBox = new Rectangle(this.x, this.y, 150, 300);
+        this.hitBox = new Rectangle(this.x, this.y, 150/1.4f, 300/1.4f);
         this.projX = this.x;
         this.projY = this.y;
         animator.AddAnimation("fire.png", 13, 1f, "fire");
-        animator.AddAnimation("enemyStand.png", 13, 1f, "stand");
         animator.AddAnimation("enemyDeath.png", 8, 2f, "death");
         animator2.AddAnimation("spell.png", 5, 0.3f, "spell");
-        animator.StartAnimation("stand");
+        animator.StartAnimation("fire");
         animator2.StartAnimation("spell");
     }
     public boolean getAlive(){
@@ -47,18 +46,18 @@ public class Enemy extends Entity{
             p = new Projectile(x, y + hitBox.height-80, new Vector2(dx,dy));
         }
 
-        if(dx > 0){
-            target.setHitDir(1);
-        }
-        else{
-            target.setHitDir(-1);
-        }
+        
         
         if(p != null && p.hitBox.overlaps(target.hitBox)){
+            if(dx > 0){
+                target.setHitDir(1);
+            }
+            else{
+                target.setHitDir(-1);
+            }
             setSound("Sounds/spell.wav");
             target.gotHit = true;
             p = null;
-            animator.StartAnimation("fire");
         }
         else{
             for(Rectangle f : this.hitBoxes){
@@ -73,7 +72,7 @@ public class Enemy extends Entity{
     }
 
     public boolean death(){
-        if(Gdx.input.isKeyJustPressed(Keys.SPACE)){
+        if(Gdx.input.isKeyJustPressed(Keys.SPACE) && !target.onImpact){
             if(target.attack().overlaps(this.hitBox)){                
                 deathTime = 0;
                 animator.StartAnimation("death");
