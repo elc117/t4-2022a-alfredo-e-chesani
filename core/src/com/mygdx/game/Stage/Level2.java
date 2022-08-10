@@ -16,7 +16,7 @@ public class Level2 extends Stage{
         SetHeight(2);
         this.background = new Texture("background.png");
         this.mc = game.player;
- 
+        
         //addFloor(0, 0, 1*zoom, 0.05f); //chao
         addFloor(0.1f, 0, 0.05f, 1*zoom); //parede da esquerda
         addFloor(zoom - 0.05f - 0.1f, 0, 0.05f, 1*zoom); //parede da direita
