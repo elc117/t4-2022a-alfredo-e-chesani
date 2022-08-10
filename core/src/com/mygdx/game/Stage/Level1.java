@@ -1,5 +1,7 @@
 package com.mygdx.game.Stage;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.Entity.King;
 import com.mygdx.game.Entity.LevelBarrear;
 
 public class Level1 extends Stage{
@@ -15,7 +17,7 @@ public class Level1 extends Stage{
         this.mc = game.player;
         SetZoom(2);
         SetHeight(1);
- 
+        SetKing(1,0.1f);
         addFloor(0, 0, 1*zoom, 0.02f); //chao
         addFloor(0.1f, 0, 0.02f, 1*zoom); //parede da esquerda
         addFloor(zoom - 0.1f - 0.02f, 0, 0.02f, 1*zoom); //parede da direita
@@ -26,8 +28,10 @@ public class Level1 extends Stage{
         addFloor(1.8f, 1.3f, 0.1f, 0.05f);
         addFloor(1.2f, 0.75f, 0.1f, 0.05f);
         addFloor(0.825f, 1f, 0.1f, 0.05f);
-        addFloor(0.45f, 1.2f, 0.1f, 0.05f);
-        addFloor(0.7f, 1.45f, 0.1f, 0.05f);
+        //addFloor(0.45f, 1.1f, 0.1f, 0.05f);
+        addFloor(0.35f, 1.2f, 0.1f, 0.05f);
+        addFloor(0.5f, 1.55f, 0.1f, 0.05f);
+        addFloor(0.7f, 1.25f, 0.1f, 0.05f);
         addFloor(0.9f, 1.7f, 0.1f, 0.05f);
         addFloor(0f+0.1f, 0.6f, 0.1f, 0.05f);
         addFloor(0f+0.1f, 1.4f, 0.1f, 0.05f);
@@ -49,6 +53,11 @@ public class Level1 extends Stage{
             gameScreen.updateStage(1);
             gameScreen.camera.position.y += height*zoom;
             gameScreen.camera.update();
+        }
+
+        if(king != null && mc.hitBox.overlaps(king.hitBox))
+        {
+            gameScreen.game.setScreen(new EndScreen(gameScreen.batch, gameScreen.game));
         }
     }
 }
