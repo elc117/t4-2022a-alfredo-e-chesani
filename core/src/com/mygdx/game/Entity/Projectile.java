@@ -16,8 +16,8 @@ public class Projectile extends Entity{
 
     public void update(SpriteBatch batch, TextureRegion frame){
         batch.draw(frame, this.x, this.y, this.hitBox.width, this.hitBox.height);
-        this.x += direcao.nor().x * 1400 * Gdx.graphics.getDeltaTime();
-        this.y += direcao.nor().y * 1400 * Gdx.graphics.getDeltaTime();
+        this.x += direcao.nor().x * 600 * Gdx.graphics.getDeltaTime();
+        this.y += direcao.nor().y * 600 * Gdx.graphics.getDeltaTime();
         this.hitBox.x = this.x;
         this.hitBox.y = this.y;
     }
