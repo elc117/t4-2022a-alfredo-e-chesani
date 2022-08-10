@@ -7,8 +7,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.Input.Keys;
 import java.util.ArrayList;
 import com.badlogic.gdx.audio.Music;
+import java.lang.Math;
 public class MainCharacter extends Entity{
-    public float moveSpeed = 800;
+    public float moveSpeed = 375;
     public boolean gotHit = false;
     public int hitSpeed = 0;
     protected boolean isFalling = false;
@@ -16,7 +17,10 @@ public class MainCharacter extends Entity{
     boolean flip = false;
     protected int HitDir;
     private double deltaImpact = 400;
-    private double impactCooldown = 8;
+    private double impactForce = 8;
+    private float timer = 0;
+    private float impactCooldown = 1f;
+    public boolean onImpact = false;
     protected float timeAttack;
     protected boolean attacking;
     public float w;
@@ -25,7 +29,7 @@ public class MainCharacter extends Entity{
     public MainCharacter()
     {
 
-        w = Gdx.graphics.getWidth() * 3.50f/100;
+        w = Gdx.graphics.getWidth() * 4.25f/100;
         h = w * 1.8f;
         frame = new TextureRegion();
         animator = new Animator();
@@ -45,16 +49,22 @@ public class MainCharacter extends Entity{
     //agora apenas aumenta e diminui a velocidade do impacto
     public void impacto()
     {
+        if(gotHit && onImpact)
+        {
+            gotHit = false;
+        }
+
         if(gotHit){
             gotHit = false;
+            onImpact = true;
             hitSpeed = (int)(deltaImpact);
             if(fallSpeed < 0)
-                fallSpeed += 4 * deltaImpact;
+                fallSpeed += 2 * deltaImpact;
             return;
-        }   
+        }
         
         if(hitSpeed > 0){
-            hitSpeed -= impactCooldown;
+            hitSpeed -= impactForce;
             return;
         }
         hitSpeed = 0;
@@ -95,7 +105,7 @@ public class MainCharacter extends Entity{
         }
 
         if(Gdx.input.isKeyJustPressed(Keys.W) && !isFalling && hitSpeed <= 0)
-            fallSpeed = 1825;
+            fallSpeed = 1250;
 
         futureY += fallSpeed*Gdx.graphics.getDeltaTime();
         //x movido com base no impacto
@@ -167,6 +177,16 @@ public class MainCharacter extends Entity{
         if(fallSpeed > -2000)
         {
             fallSpeed -= 2*mass;
+        }
+
+        if(onImpact)
+        {
+            timer += Gdx.graphics.getDeltaTime();
+        }
+        if(timer >= impactCooldown)
+        {
+            timer = 0;
+            onImpact = false;
         }
         
         if(flip ^ frame.isFlipX())
