@@ -2,12 +2,11 @@ package com.mygdx.game.Stage;
 import com.mygdx.game.Entity.*;
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Stage{
 
@@ -33,6 +32,13 @@ public class Stage{
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
         king = null;
+    }
+
+    public void SetKing(float x, float y)
+    {
+        x *= width;
+        y *= height;
+        king = new King(mc, new Rectangle(x - offsetX + stageOffset, y - offsetY + stageOffset, 50, 50));
     }
 
     public void SetZoom(float zoom)
@@ -71,7 +77,7 @@ public class Stage{
     {
         x *= width;
         y *= height;
-        this.enemies.add(new Enemy(x - offsetX, y + 30 - offsetY + stageOffset, mc));
+        this.enemies.add(new Enemy(x - offsetX, y + 15 - offsetY + stageOffset, mc));
     }
 
     protected void checkEndLevel()
