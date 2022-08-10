@@ -10,12 +10,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.Entity.King;
 import com.mygdx.game.Entity.MainCharacter;
 
 public class GameScreen extends ScreenAdapter
@@ -55,9 +51,10 @@ public class GameScreen extends ScreenAdapter
         castleTheme = Gdx.audio.newMusic(Gdx.files.internal("castle.mp3"));
         castleTheme.setLooping(true);
 //      stages.add(new Level3(player));
-
+        
         //level inicial
         castleTheme.play();
+        castleTheme.setVolume(0.2f);
         currentStage = stages.get(0);
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();

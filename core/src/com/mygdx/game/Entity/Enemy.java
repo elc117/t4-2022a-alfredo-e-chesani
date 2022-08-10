@@ -40,11 +40,11 @@ public class Enemy extends Entity{
         float tx = target.getX();
         float ty = target.getY() + target.h/2f; //mirando no peito
         float dx = tx - x;
-        float dy = ty - (y+hitBox.height);
+        float dy = ty - (y+hitBox.height-80);
 
         if(p == null)
         {
-            p = new Projectile(x, y + hitBox.height, new Vector2(dx,dy));
+            p = new Projectile(x, y + hitBox.height-80, new Vector2(dx,dy));
         }
 
         if(dx > 0)
