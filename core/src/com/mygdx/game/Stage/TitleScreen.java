@@ -46,7 +46,7 @@ public class TitleScreen extends ScreenAdapter
         background.StartAnimation("menu");
         theme = Gdx.audio.newMusic(Gdx.files.internal("menu.mp3"));
         theme.setLooping(true);
-        theme.setVolume(0.1f);
+        theme.setVolume(0.2f);
         theme.play();
 
         Button play = createButton("play.pack", new Rectangle(500,150,200,150));

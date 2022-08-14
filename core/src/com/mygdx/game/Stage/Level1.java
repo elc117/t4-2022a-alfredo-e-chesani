@@ -14,8 +14,6 @@ public class Level1 extends Stage{
         super(game);
         super.gameScreen = gameScreen;
         this.background = new Texture("background.png");
-       // king = new King(mc, new Rectangle(0,0,50,50));
-        //king.setXY(-50, -50);
         this.mc = gameScreen.player;
         SetZoom(2);
         SetHeight(1);
@@ -54,11 +52,6 @@ public class Level1 extends Stage{
             gameScreen.updateStage(1);
             gameScreen.camera.position.y += height*zoom;
             gameScreen.camera.update();
-        }
-
-        if(king != null && mc.hitBox.overlaps(king.hitBox))
-        {
-            gameScreen.game.setScreen(new EndScreen(gameScreen.batch, gameScreen.game));
         }
     }
 }

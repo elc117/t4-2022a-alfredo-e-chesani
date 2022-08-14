@@ -9,9 +9,10 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.audio.Music;
 
 public class Stage{
-
+    protected boolean gameFinal = false;
     protected Texture background;
     protected DelayedRemovalArray <Enemy> enemies;
     protected LevelBarrear barrear;
@@ -27,7 +28,8 @@ public class Stage{
     public float stageHeight;
     public float stageOffset;
     protected float zoom;
-    
+    protected Music sound;
+    protected Music kingsRoom;
     float fd; //espessura dos floors
     public Stage(Game game){
         this.game = game;
@@ -44,7 +46,11 @@ public class Stage{
         y *= height;
         king = new King(mc, new Rectangle(x - offsetX, y - offsetY + stageOffset, 50, 50));
     }
-
+    public boolean haveKing(){
+        if(king != null)
+            return true;
+        return false;
+    }
     public void SetZoom(float zoom)
     {
         this.zoom = zoom;
@@ -97,17 +103,25 @@ public class Stage{
         }
     }
     
-    public void update(SpriteBatch batch){
+    public void soundEffect(){
+        if(Gdx.input.isKeyJustPressed(Keys.K)){
+            sound = Gdx.audio.newMusic(Gdx.files.internal("Sounds/killAll.mp3"));
+            sound.play();    
+        }
+    }
 
-        
-        if(Gdx.input.isKeyPressed(Keys.K))
-        {
+    public void killAll(){
+        if(sound != null && !sound.isPlaying()){
             for (Enemy enemy : enemies) 
             {
                 enemy.alive = false;
             }
         }
+    }
 
+    public void update(SpriteBatch batch){
+        soundEffect();
+        killAll();
         batch.draw(this.background, 0 - offsetX, stageOffset - offsetY, width*zoom, height*zoom);
         for(Enemy enemy : this.enemies){
             enemy.update(batch);
@@ -121,7 +135,8 @@ public class Stage{
             king.update(batch);
         }
 
-        barrear.update(batch);
+        if(barrear != null)
+            barrear.update(batch);
         
         checkEndLevel();
         deadDelete();

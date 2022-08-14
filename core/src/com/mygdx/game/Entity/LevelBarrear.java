@@ -25,7 +25,6 @@ public class LevelBarrear extends Entity
         animator.AddAnimation("barrearOpening.png", 5, 1, 0, 1, 999.0f,"closed");
         animator.AddAnimation("barrearOpening.png", 5, 1, 4, 1, 999.0f, "open");
         animator.StartAnimation("closed");
-
         int h = Gdx.graphics.getHeight();
         int offset = h + h/2;
         int w = Gdx.graphics.getWidth();
@@ -43,7 +42,7 @@ public class LevelBarrear extends Entity
     {
         DelayedRemovalArray list = stage.GetEnemyList();
         
-        if(list.size == 0 && !isOpen)
+        if(list.size == 0 && !isOpen && !stage.haveKing())
         {
             animator.StartAnimation("opening");
             this.hitBox.width = 0;
