@@ -62,7 +62,7 @@ public class TitleScreen extends ScreenAdapter
         sair.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                Gdx.app.exit();
+                //Gdx.app.exit();
             }
         });
     
@@ -77,7 +77,7 @@ public class TitleScreen extends ScreenAdapter
 		ScreenUtils.clear(0, 0, 0, 1);
 
         batch.begin();
-        batch.draw(background.UpdateFrame(), 0, 0, 640, 480);
+        batch.draw(background.UpdateFrame(), 0, 0, width, height);
         batch.end();
 
         stage.act(delta);
@@ -93,7 +93,7 @@ public class TitleScreen extends ScreenAdapter
 
     private Button createButton(String pack, Rectangle bounds)
     {
-        Skin skin = new Skin(new TextureAtlas(pack));
+        Skin skin = new Skin(new TextureAtlas(pack));;
         ButtonStyle style = new ButtonStyle();
 
         String subPack = pack.toLowerCase();

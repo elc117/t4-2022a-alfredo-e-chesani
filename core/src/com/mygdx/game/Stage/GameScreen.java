@@ -28,6 +28,7 @@ public class GameScreen extends ScreenAdapter
 	ArrayList<com.mygdx.game.Stage.Stage> stages;
 
     SpriteBatch batch;
+    boolean OnEndGame = false;
     int width;
     int height;
     Viewport viewport;
@@ -46,8 +47,8 @@ public class GameScreen extends ScreenAdapter
     @Override
     public void show()
     {
-        stages.add(new Level1(this));
-        stages.add(new Level2(this));
+        stages.add(new Level1(game, this));
+        stages.add(new Level2(game, this));
         castleTheme = Gdx.audio.newMusic(Gdx.files.internal("castle.mp3"));
         castleTheme.setLooping(true);
 //      stages.add(new Level3(player));
@@ -107,6 +108,11 @@ public class GameScreen extends ScreenAdapter
     public void updateStage(int index)
     {
         currentStage = stages.get(index);
+    }
+
+    public void EndGame()
+    {
+        game.setScreen(new EndScreen(batch, game));
     }
 }
 

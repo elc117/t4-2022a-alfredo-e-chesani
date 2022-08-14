@@ -13,7 +13,7 @@ public class Enemy extends Entity{
     
     float projX;
     float projY;
-    protected boolean alive;
+    public boolean alive;
     Animator animator2;
     Projectile p = null;
     float deathTime = -1;

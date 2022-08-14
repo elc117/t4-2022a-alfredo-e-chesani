@@ -1,4 +1,5 @@
 package com.mygdx.game.Stage;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Entity.King;
@@ -8,16 +9,16 @@ public class Level1 extends Stage{
 
     float ew = width * 8/100; //largura do inimigo
 
-    public Level1(GameScreen game)
+    public Level1(Game game, GameScreen gameScreen)
     {
-        super.gameScreen = game;
+        super(game);
+        super.gameScreen = gameScreen;
         this.background = new Texture("background.png");
        // king = new King(mc, new Rectangle(0,0,50,50));
         //king.setXY(-50, -50);
-        this.mc = game.player;
+        this.mc = gameScreen.player;
         SetZoom(2);
         SetHeight(1);
-        SetKing(1,0.1f);
         addFloor(0, 0, 1*zoom, 0.02f); //chao
         addFloor(0.1f, 0, 0.02f, 1*zoom); //parede da esquerda
         addFloor(zoom - 0.1f - 0.02f, 0, 0.02f, 1*zoom); //parede da direita

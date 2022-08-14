@@ -3,7 +3,9 @@ import com.mygdx.game.Entity.*;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.utils.DelayedRemovalArray;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -16,6 +18,7 @@ public class Stage{
     protected ArrayList<Floor> floors;
     protected MainCharacter mc;
     protected GameScreen gameScreen;
+    protected Game game;
     protected King king;
     protected int height;
     protected int width;
@@ -26,7 +29,8 @@ public class Stage{
     protected float zoom;
     
     float fd; //espessura dos floors
-    public Stage(){
+    public Stage(Game game){
+        this.game = game;
         floors = new ArrayList<Floor>();
         enemies = new DelayedRemovalArray<Enemy>();
         width = Gdx.graphics.getWidth();
@@ -38,7 +42,7 @@ public class Stage{
     {
         x *= width;
         y *= height;
-        king = new King(mc, new Rectangle(x - offsetX + stageOffset, y - offsetY + stageOffset, 50, 50));
+        king = new King(mc, new Rectangle(x - offsetX, y - offsetY + stageOffset, 50, 50));
     }
 
     public void SetZoom(float zoom)
@@ -92,7 +96,18 @@ public class Stage{
             }
         }
     }
+    
     public void update(SpriteBatch batch){
+
+        
+        if(Gdx.input.isKeyPressed(Keys.K))
+        {
+            for (Enemy enemy : enemies) 
+            {
+                enemy.alive = false;
+            }
+        }
+
         batch.draw(this.background, 0 - offsetX, stageOffset - offsetY, width*zoom, height*zoom);
         for(Enemy enemy : this.enemies){
             enemy.update(batch);
@@ -107,8 +122,13 @@ public class Stage{
         }
 
         barrear.update(batch);
-
+        
         checkEndLevel();
         deadDelete();
+
+        if(king != null && mc.hitBox.overlaps(king.hitBox))
+        {
+            gameScreen.EndGame();
+        }
     }
 }

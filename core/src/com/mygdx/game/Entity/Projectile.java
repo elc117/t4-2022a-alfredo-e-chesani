@@ -10,7 +10,7 @@ public class Projectile extends Entity{
     public Projectile(float x, float y, Vector2 direcao){
         this.direcao = direcao;
         setXY(x, y);
-        float lado = Gdx.graphics.getWidth()*4/100;
+        float lado = 720*4/100;
         this.hitBox = new Rectangle(this.x, this.y, lado, lado);
     }
 
