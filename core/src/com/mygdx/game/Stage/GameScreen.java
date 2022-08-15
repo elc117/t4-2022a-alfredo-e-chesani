@@ -113,6 +113,7 @@ public class GameScreen extends ScreenAdapter
 
     public void EndGame()
     {
+        castleTheme.stop();
         game.setScreen(new EndScreen(batch, game));
     }
 }

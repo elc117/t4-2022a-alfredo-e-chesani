@@ -4,6 +4,9 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -14,21 +17,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.game.Entity.Animator;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class TitleScreen extends ScreenAdapter
+public class ControlScreen extends ScreenAdapter
 {
     SpriteBatch batch;
     Game game;
     int width;
-    Stage stage;
     int height;
-    Animator background;
-    Music theme;
-    Vector2 buttonSize = new Vector2(250, 150);
+    Texture background;
+    Stage stage;
 
-
-    public TitleScreen(SpriteBatch batch, Game game)
+    public ControlScreen(SpriteBatch batch, Game game)
     {
         this.game = game;
         this.batch = batch;
@@ -39,67 +40,40 @@ public class TitleScreen extends ScreenAdapter
     {
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
+        background = new Texture("controlscreen.png");
 
         stage = new Stage();
-        background = new Animator();
-        background.AddAnimation("menu.png", 4, 1.0f, "menu");
-        background.StartAnimation("menu");
-        theme = Gdx.audio.newMusic(Gdx.files.internal("menu.mp3"));
-        theme.setLooping(true);
-        theme.setVolume(0.2f);
-        theme.play();
+        Button voltar = createButton("voltar.pack", new Rectangle(100,20,200,150));
 
-        Button play = createButton("play.pack", new Rectangle(500,175,200,150));
-        Button controles = createButton("controles.pack", new Rectangle(500,100,200,150));
-        Button sair = createButton("sair.pack", new Rectangle(500,25,200,150));
-
-        play.addListener(new ChangeListener() {
+        voltar.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                theme.stop();
-                game.setScreen(new GameScreen(batch, game));
+                game.setScreen(new TitleScreen(batch, game));
             }
         });
 
-        controles.addListener(new ChangeListener() {
-            @Override
-            public void changed (ChangeEvent event, Actor actor) {
-                theme.stop();
-                game.setScreen(new ControlScreen(batch, game));
-            }
-        });
-
-        sair.addListener(new ChangeListener() {
-            @Override
-            public void changed (ChangeEvent event, Actor actor) {
-                Gdx.app.exit();
-            }
-        });
-    
-        Gdx.input.setInputProcessor(stage);
-        stage.addActor(play);
-        stage.addActor(controles);
-        stage.addActor(sair);
+        stage.addActor(voltar);
     }
 
     @Override
     public void render(float delta)
     {
+        batch.begin();
+
 		ScreenUtils.clear(0, 0, 0, 1);
 
-        batch.begin();
-        batch.draw(background.UpdateFrame(), 0, 0, width, height);
+        batch.draw(background, 0, 0, width, height);
         batch.end();
 
+        Gdx.input.setInputProcessor(stage);
         stage.act(delta);
         stage.draw();
-
     }
   
     @Override
     public void hide()
     {
-        stage.dispose();
+
     }
 
     private Button createButton(String pack, Rectangle bounds)

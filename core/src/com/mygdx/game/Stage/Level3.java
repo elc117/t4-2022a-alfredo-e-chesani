@@ -47,6 +47,7 @@ public class Level3 extends Stage{
         if(mc.getY() > height*(stageHeight)*zoom - offsetY){
             if(!gameFinal){
                 kingsRoom = Gdx.audio.newMusic(Gdx.files.internal("kingsRoom.mp3"));
+                kingsRoom.setVolume(0.3f);
                 kingsRoom.play();
             }
             gameFinal = true;

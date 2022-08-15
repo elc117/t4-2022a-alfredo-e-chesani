@@ -28,7 +28,7 @@ public class EndScreen extends ScreenAdapter
     int height;
     Texture background;
     Stage stage;
-    Music theme;
+
     Vector2 buttonSize = new Vector2(250, 150);
     OrthographicCamera camera;
     Viewport viewport;
@@ -44,7 +44,6 @@ public class EndScreen extends ScreenAdapter
     {
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
-        theme = Gdx.audio.newMusic(Gdx.files.internal("menu.mp3"));
         background = new Texture("endGame.png");
 
         camera = new OrthographicCamera();
@@ -52,12 +51,11 @@ public class EndScreen extends ScreenAdapter
         viewport = new FitViewport(width, height, camera);
 
         stage = new Stage();
-        Button voltar = createButton("voltar.pack", new Rectangle(100,20,200,150));
+        Button voltar = createButton("voltar.pack", new Rectangle(100,75,200,150));
 
         voltar.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                theme.stop();
                 game.setScreen(new TitleScreen(batch, game));
             }
         });
